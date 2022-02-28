@@ -19,5 +19,6 @@ def events():
 @cross_origin()
 def serve():
     send_from_directory(app.static_folder, "index.html")
+    
 if __name__ == '__main__':
     app.run()
