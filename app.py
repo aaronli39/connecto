@@ -18,7 +18,7 @@ def events():
 @app.route('/')
 @cross_origin()
 def serve():
-    return send_from_directory(app.static_folder, "index.html")
+    return "<p>Hello</p>"
     
 if __name__ == '__main__':
     app.run()
