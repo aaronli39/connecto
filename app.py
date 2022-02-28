@@ -1,9 +1,9 @@
-from flask import Flask
+from flask import Flask, render_template
 import requests
 import json
 from flask.helpers import send_from_directory
 from flask_cors import CORS, cross_origin
-app = Flask(__name__, static_folder="connecto/build", static_url_path="")
+app = Flask(__name__, static_folder='build', static_url_path='/')
 CORS(app)
 
 @app.route('/api', methods=['GET'])
@@ -18,7 +18,7 @@ def events():
 @app.route('/')
 @cross_origin()
 def serve():
-    return "<p>Hello</p>"
-    
+    return app.send_static_file('index.html')
+
 if __name__ == '__main__':
     app.run()
