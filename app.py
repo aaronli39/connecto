@@ -3,7 +3,7 @@ import requests
 import json
 from flask.helpers import send_from_directory
 from flask_cors import CORS, cross_origin
-app = Flask(__name__, static_url_path="", static_folder="connecto/build")
+app = Flask(__name__, static_folder="connecto/build", static_url_path="")
 CORS(app)
 
 @app.route('/api', methods=['GET'])
