@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 import axios from 'axios';
+axios.defaults.baseURL = 'https://spark-connecto.herokuapp.com';
+
 function App() {
   const [eventList, seteventList] = useState([]);
 
   function sayHello() {
-    axios.get("https://spark-connecto.herokuapp.com/events")
+    axios.get("/api")
   .then(response => {
     const result = JSON.stringify(response.data.events_results, null, 3);
     seteventList(result)
