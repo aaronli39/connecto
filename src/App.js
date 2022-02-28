@@ -5,7 +5,7 @@ function App() {
   const [eventList, seteventList] = useState([]);
 
   function sayHello() {
-    axios.get("http://127.0.0.1:5000/")
+    axios.get("https://spark-connecto.herokuapp.com/events")
   .then(response => {
     const result = JSON.stringify(response.data.events_results, null, 3);
     seteventList(result)
