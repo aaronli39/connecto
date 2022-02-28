@@ -1,25 +1,30 @@
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react';
 import './App.css';
-
+import axios from 'axios';
 function App() {
+  const [eventList, seteventList] = useState([]);
+
+  function sayHello() {
+    axios.get("http://127.0.0.1:5000/")
+  .then(response => {
+    const result = JSON.stringify(response.data.events_results, null, 3);
+    seteventList(result)
+  })
+  .catch(error => {
+    console.log(error);
+  })
+  }
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Search Events!</h1>
+      <button onClick={sayHello}>
+        Click to search for events in Boston
+      </button>
+      <p>{eventList}</p>
     </div>
   );
+
 }
 
 export default App;
