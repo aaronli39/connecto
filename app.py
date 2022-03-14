@@ -17,6 +17,7 @@ def get_events():
     r = requests.get(url = URL)
     data = r.json()
     return data
+    
 @app.route('/')
 @cross_origin()
 def serve():

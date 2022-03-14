@@ -1,50 +1,56 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import axios from 'axios';
+import { Button, Card, CardContent, Grid, TextField, Typography } from '@mui/material';
 axios.defaults.baseURL = 'https://spark-connecto.herokuapp.com';
-export class EventSearch extends Component {
-    constructor(props) {
-      super(props)
-    
-      this.state = {
-         search_input: '',
-         event_list: ''
-      }
-    }
 
-    changeHandler = (e) => {
-        this.setState({ [e.target.name]: e.target.value })
-    } 
+const EventSearch = () => {
+  const [searchInput, setSearchInput] = useState("");
+  const [eventList, setEventList] = useState([]);
 
-    submitHandler = (e) => {
-        e.preventDefault()
-        console.log(this.state)
-        axios.post('/api', this.state)
-            .then(response => {
-                console.log(JSON.stringify(response.data.events_results, null, 3))
-                this.setState({event_list: JSON.stringify(response.data.events_results, null, 3)})
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
-  render() {
-      const { search_input } = this.state
-    return (
-      <div>
-          <div>
-              <form onSubmit={this.submitHandler}>
-                  <div>
-                      <input type="text" name="search_input" value={search_input} onChange={this.changeHandler}/> 
-                  </div>
-                  <button type="submit">Search</button>
-              </form>
-          </div>
-          <div>
-              <p>{this.state.event_list}</p>
-          </div>
-      </div>
-    )
-  }
+  const fetchResults = () => {
+    console.log("fetching now...");
+    axios.post("/api", { "search_input": searchInput })
+      .then(response => {
+        console.log(response.data.events_results);
+        let data = response.data.events_results;
+        setEventList(data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  };
+
+  return (
+    <>
+      <Grid container spacing={2} justifyContent="center">
+        <Grid item xs={12}>
+          <TextField id="searchEventField" label="Event Search" variant="outlined" onChange={(e) => setSearchInput(e.target.value)} value={searchInput} />
+        </Grid>
+        <Grid item xs={12}>
+          <Button variant="outlined" onClick={fetchResults}>Search</Button>
+        </Grid>
+
+        {eventList.map(event => (
+          <Grid item xs={8} alignSelf="center">
+            <Card sx={{ minWidth: 275 }}>
+              <CardContent>
+                <Typography variant="h4">
+                  {event.title}
+                </Typography>
+                <Typography variant="h6">
+                  {event.date.start_date}
+                </Typography>
+                <Typography variant="body2">
+                  {event.description}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+
+      </Grid>
+    </>
+  )
 }
 
-export default EventSearch
+export default EventSearch;
