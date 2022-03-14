@@ -11,6 +11,7 @@ function App() {
     <div className="App">
       <h1>Search Events!</h1>
       <EventSearch />
+      <br></br>
       <Photo />
     </div>
   );
