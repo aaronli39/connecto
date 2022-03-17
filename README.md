@@ -1,5 +1,15 @@
-## Development installation instructions:
-1) Install `python3-venv`
-2) Install `venv` with `python3 -m venv ~/venv`. `~/venv` will contain the folder that contains your virtual environment, and you will use it to install dependencies. 
-3) Run `~/venv/bin/activate` to activate the environment. Run `pip install flask`, and make sure `npm` is installed, and run `npm install` in the root React folder
-4) `app.py` contains all the backend logic and routing, run `flask run` in the `backend` folder to run the backend
+#### Connect-O 
+This is the source code repository for the ConnectO project. Our product utilizes **React Native** for the UI and **Firebase** for the backend.
+
+#### Old Code
+Our previous source code files are contained within the `./legacy` folder for reference. We can delete this after we are done converted to React Native
+
+#### Installation
+* `npm install -g expo-cli`
+* create **Expo** account online
+* in the terminal, run  `expo login` and enter your verified username and password
+* Download the **Expo Go** application from the App Store
+* log into the **Expo Go** app with your Expo account
+* Make sure your **iPhone** and **computer** are both on the same wifi network 
+* run `npm install` to install all packages
+* run `npm start` in the terminal to see and load the app
