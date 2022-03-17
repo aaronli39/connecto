@@ -4,6 +4,10 @@ This is the source code repository for the ConnectO project. Our product utilize
 #### Old Code
 Our previous source code files are contained within the `./legacy` folder for reference. We can delete this after we are done converted to React Native
 
+#### Libraries:
+* `react-native-paper` as our mobile UI component library (kind of like Material-UI for web)
+* `axios` for data fetching
+
 #### Installation
 * `npm install -g expo-cli`
 * create **Expo** account online
