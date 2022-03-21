@@ -1,8 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19000,
-  "expoServerNgrokUrl": "https://3a-i2k.aaronli39.connecto.exp.direct",
-  "packagerNgrokUrl": "https://3a-i2k.aaronli39.connecto.exp.direct",
-  "ngrokPid": 20172
+  "expoServerPort": null,
+  "packagerPort": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "packagerPid": null,
+  "webpackServerPort": null
 }
