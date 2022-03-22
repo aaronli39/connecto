@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import EventSearch from "./src/views/EventSearch";
 import ProfileScreen from "./src/views/ProfileScreen";
-
+import MainContainer from './src/MainContainer';
 const theme = {
   ...DefaultTheme,
   colors: {
@@ -18,20 +18,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <PaperProvider theme={theme}>
-
-      <NavigationContainer>
-        <StatusBar style="auto" />
-        <Stack.Navigator screenOptions={{
-          headerShown: false
-        }}>
-          <Stack.Screen
-            name="Home"
-            component={EventSearch}
-          // options={{ title: 'Welcome' }}
-          />
-          <Stack.Screen name="Profile" component={ProfileScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <MainContainer/>
     </PaperProvider>
   );
 }

@@ -98,13 +98,7 @@ const EventSearch = ({ navigation }) => {
 				>
 					Search
 				</Button>
-				<Button
-					mode="contained"
-					style={styles.searchButton}
-					onPress={() => navigation.navigate("Profile")}
-				>
-					Test 2nd page
-				</Button>
+				
 				{eventList.map((event, idx) => (
 					<Card key={idx} style={styles.cardContainer}>
 						<Card.Content style={styles.cardContent}>
