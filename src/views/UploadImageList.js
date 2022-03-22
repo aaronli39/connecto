@@ -3,7 +3,7 @@ import { Image, View, Platform, TouchableOpacity, Text, StyleSheet } from 'react
 import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
-export default function UploadImage() {
+export default function UploadImageList() {
  const [image, setImage] = useState(null);
  const addImage= async ()=>{
     let image_to_add = await ImagePicker.launchImageLibraryAsync({
@@ -26,7 +26,7 @@ export default function UploadImage() {
 
 <View style={imageUploaderStyles.uploadBtnContainer}>
 <TouchableOpacity onPress={addImage} style={imageUploaderStyles.uploadBtn} >
-<Text>{image ? 'Edit' : 'Upload'} Image</Text>
+<Text>{image ? 'Edit' : 'Upload'} </Text>
 <AntDesign name="camera" size={20} color="black" />
 </TouchableOpacity>
 </View>
@@ -40,11 +40,12 @@ export default function UploadImage() {
 const imageUploaderStyles=StyleSheet.create({
    container:{
        elevation:2,
-       height:200,
-       width:200,
+       height:145,
+       width:145,
+       marginRight:10,
        backgroundColor:'#efefef',
        position:'relative',
-       borderRadius:25,
+       borderRadius:16,
        overflow:'hidden',
    },
    uploadBtnContainer:{

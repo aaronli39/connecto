@@ -1,5 +1,6 @@
 import React from "react";
-import { View, ScrollView, Text , TouchableOpacity, ImageBackground, TextInput, StyleSheet} from "react-native";
+import { View, ScrollView, Text , TouchableOpacity, ImageBackground, TextInput, StyleSheet, FlatList,
+	Dimensions} from "react-native";
 import { Button, useTheme, withTheme } from "react-native-paper";
 import Constants from "expo-constants";
 import { useState } from "react";
@@ -9,15 +10,54 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import UploadImageList from "./UploadImageList";
 
 
 
 // THIS IS JUST A TEST FILE FOR NAVIGATION, PLEASE DELETE OR REPLACE THIS COMPONENT!
 const ProfileScreen = ({ navigation }) => {
+	const { width } = Dimensions.get('window');
+	const SPACING = 10;
+	const THUMB_SIZE = 80;
+	const DATA = [
+		{image: <UploadImageList/>, id: "1"},
+		{image: <UploadImageList/>, id: "2"},
+		{image: <UploadImageList/>, id: "3"},
+		{image: <UploadImageList/>, id: "4"},
+		{image: <UploadImageList/>, id: "5"},
+		{image: <UploadImageList/>, id: "6"},
+	]
 	const { colors } = useTheme();
 	return (
-		<ScrollView styles={styles.container} contentContainerStyle={{marginTop: 50, marginLeft: 10, marginRight:10 , justifyContent: "center",  alignItems: "center"}}>
+		
+		<ScrollView styles={styles.container} contentContainerStyle={{marginTop: 50, paddingBottom: 60, marginLeft: 10, marginRight:10 , justifyContent: "center",  alignItems: "center"}}>
 			<UploadImage style={{alignSelf: "center"}}/>
+			<FlatList
+				horizontal={true}
+				data={DATA}
+				style={{marginTop:"5%", marginBottom: "5%"}}
+				
+				showsHorizontalScrollIndicator={false}
+				contentContainerStyle={{
+					paddingHorizontal: SPACING
+				}}
+				keyExtractor={item => item.id}
+				renderItem={({ item, index }) => (
+					<TouchableOpacity activeOpacity={0.9}>
+					<UploadImageList
+						style={{
+						width: THUMB_SIZE,
+						height: THUMB_SIZE,
+						marginRight: SPACING,
+						borderRadius: 16,
+						//borderWidth: index === indexSelected ? 4 : 0.75,
+						//borderColor: index === indexSelected ? 'orange' : 'white'
+						}}
+					/>
+					</TouchableOpacity>
+				)}
+				/>
+
 			<Text style={{alignSelf:"center" , fontWeight:"bold"}}>James Chen</Text>
 			<View style={styles.action}>
 				<Feather name="info" color={colors.text} size={20} />
