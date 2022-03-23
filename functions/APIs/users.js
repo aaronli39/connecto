@@ -44,3 +44,47 @@ exports.createOneUser = (request, response) => {
 			console.error(err);
 		});
 };
+
+exports.getOneUser = (request, response) => {
+    const id = "DdRPo2lJfFbBcqkzAhXz";
+
+	db
+		.collection('users')
+		.doc(id)
+        .get()
+        .then((data) => {
+			return response.json(data.data());
+        })
+		.catch((err) => {
+			console.error(err);
+			return response.status(500).json({ error: err.code});
+		});
+};
+
+exports.editOneUser = (request, response) => {
+    const id = "DdRPo2lJfFbBcqkzAhXz";
+
+	let document = db.collection('users').doc(id);
+    document.update(request.body)
+    .then(() => {
+        response.json({message: 'Updated successfully'});
+    })
+    .catch((err) => {
+        console.error(err);
+        return response.status(500).json({ error: err.code});
+    });
+};
+
+exports.uploadPhoto = (request, response) => {
+    const id = "DdRPo2lJfFbBcqkzAhXz";
+
+	let document = db.collection('users').doc(id);
+    document.update(request.body)
+    .then(() => {
+        response.json({message: 'Updated successfully'});
+    })
+    .catch((err) => {
+        console.error(err);
+        return response.status(500).json({ error: err.code});
+    });
+};

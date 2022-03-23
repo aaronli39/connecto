@@ -5,7 +5,10 @@ const app = require('express')();
 
 const {
     getAllUsers,
-    createOneUser
+    createOneUser,
+    getOneUser,
+    editOneUser,
+    uploadPhoto
 } = require('./APIs/users')
 const {
     getAllEvents,
@@ -13,7 +16,10 @@ const {
 } = require('./APIs/events')
 
 app.get('/users', getAllUsers);
-app.post('/user', createOneUser);
+// app.post('/user', createOneUser);
+app.get('/user', getOneUser);
+app.put('/user', editOneUser);
+app.post('/user', uploadPhoto);
 app.get('/events', getAllEvents);
 app.post('/event', createOneEvent);
 exports.api = functions.https.onRequest(app);
