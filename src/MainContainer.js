@@ -11,8 +11,9 @@ const profileName = 'Profile';
 const Tab = createBottomTabNavigator();
 export default function MainContainer(){
     return(
-        <NavigationContainer>
+        <NavigationContainer style={{backgroundColor: "#071740", position: "sticky", fixed:"bottom"}}>
             <Tab.Navigator
+                style={{backgroundColor: "#071740", position: "sticky", fixed: "bottom"}}
                 initialRouteName={homeName}
                 screenOptions={({route}) => ({
                     tabBarIcon: ({focused, color, size}) => {

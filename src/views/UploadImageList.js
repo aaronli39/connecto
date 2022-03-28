@@ -28,38 +28,35 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const firestore = getFirestore(app);
 
-
-
-
-export default function UploadImage() {
+export default function UploadImageList(props)  {
+    console.log(props.list_num);
     const docRef = doc(firestore, 'users', "DdRPo2lJfFbBcqkzAhXz");
-	getDoc(docRef).then(doc =>{
-		if(doc.exists){
-			console.log("Document Data:" , doc.data().FirstName);
-			let data = doc.data();
-			setImage(data.ProfileImage);
+    getDoc(docRef).then(doc =>{
+        if(doc.exists){
+            let data = doc.data();
+            setImage(data.Images[props.list_num]);
 
-			}
-		else{
-			console.log("No such document");
-		}
-	})
-	.catch(error => {
-		console.log(error);
-	})
- const [image, setImage] = useState(null);
- const addImage= async ()=>{
-    let image_to_add = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4,3],
-        quality: 1,
-    });
-    
-    if(!image_to_add.cancelled){
-        setImage(image_to_add.uri);
-    }
- };
+            }
+        else{
+            console.log("No such document");
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    })   
+    const [image, setImage] = useState(null);
+    const addImage= async ()=>{
+        let image_to_add = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4,3],
+            quality: 1,
+        });
+        
+        if(!image_to_add.cancelled){
+            setImage(image_to_add.uri);
+        }
+    };
     
  return (
 <View style={imageUploaderStyles.container}>
@@ -69,7 +66,7 @@ export default function UploadImage() {
 
 <View style={imageUploaderStyles.uploadBtnContainer}>
 <TouchableOpacity onPress={addImage} style={imageUploaderStyles.uploadBtn} >
-<Text>{image ? 'Edit' : 'Upload'} Image</Text>
+<Text>{image ? 'Edit' : 'Upload'} </Text>
 <AntDesign name="camera" size={20} color="black" />
 </TouchableOpacity>
 </View>
@@ -83,14 +80,13 @@ export default function UploadImage() {
 const imageUploaderStyles=StyleSheet.create({
    container:{
        elevation:2,
-       height:200,
-       width:200,
+       height:145,
+       width:145,
+       marginRight:10,
        backgroundColor:'#efefef',
        position:'relative',
-       borderRadius:25,
+       borderRadius:16,
        overflow:'hidden',
-       marginTop:50,
-       marginBottom:50
    },
    uploadBtnContainer:{
        opacity:0.7,
