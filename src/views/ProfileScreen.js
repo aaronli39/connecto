@@ -11,58 +11,92 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import UploadImageList from "./UploadImageList";
+import { getDatabase, ref, onValue, set } from 'firebase/database';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getFirestore, setDoc, doc, collection, getDocs, getDoc, DocumentSnapshot} from 'firebase/firestore';
 
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCq2HkJfC_TLW6D4RtABPH6v8Za_wAIuyw",
+  authDomain: "xc475-connecto.firebaseapp.com",
+  projectId: "xc475-connecto",
+  storageBucket: "xc475-connecto.appspot.com",
+  messagingSenderId: "473690460289",
+  appId: "1:473690460289:web:86a6549aa86764b41b7d80",
+  measurementId: "G-RNJ8PM5ZVK"
+};
+
+	
 
 
 // THIS IS JUST A TEST FILE FOR NAVIGATION, PLEASE DELETE OR REPLACE THIS COMPONENT!
 const ProfileScreen = ({ navigation }) => {
+	// Initialize Firebase
+	const app = initializeApp(firebaseConfig);
+	const firestore = getFirestore(app);
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [bio, setBio] = useState("");
+	const [phone, setPhone] = useState("");
+	const [email, setEmail] = useState("");
+	const [country, setCountry] = useState("");
+	const [city, setCity] = useState("");
+	const [profile, setProfile] = useState("");
+	//Collection Ref
+	const docRef = doc(firestore, 'users', "DdRPo2lJfFbBcqkzAhXz");
+	getDoc(docRef).then(doc =>{
+		if(doc.exists){
+			console.log("Document Data:" , doc.data().FirstName);
+			let data = doc.data();
+			setFirstName(data.FirstName);
+			setLastName(data.LastName);
+			setBio(data.Biography);
+			setPhone(data.Phone);
+			setEmail(data.Email);
+			setCountry(data.Country);
+			setCity(data.City);
+
+			}
+		else{
+			console.log("No such document");
+		}
+	})
+	.catch(error => {
+		console.log(error);
+	})
+	//const biography = profileData.getString("Biography");
+	//const city = profileData.getString("City");
+	//const country = document.getString("Country");
+	//const first = profileData.getString("FirstName");
+	//const last = profileData.getString("LastName");
+	//const phone = document.getString("Phone");
+	//const profileImage = document.getString("ProfileImage");
 	const { width } = Dimensions.get('window');
 	const SPACING = 10;
 	const THUMB_SIZE = 80;
 	const DATA = [
-		{image: <UploadImageList/>, id: "1"},
-		{image: <UploadImageList/>, id: "2"},
-		{image: <UploadImageList/>, id: "3"},
-		{image: <UploadImageList/>, id: "4"},
-		{image: <UploadImageList/>, id: "5"},
-		{image: <UploadImageList/>, id: "6"},
+		{image: <UploadImageList list_num={0}/>, id: "1"},
+		{image: <UploadImageList list_num={1}/>, id: "2"},
+		{image: <UploadImageList list_num={2}/>, id: "3"},
+		{image: <UploadImageList list_num={3}/>, id: "4"},
+		{image: <UploadImageList list_num={4}/>, id: "5"},
+		{image: <UploadImageList list_num={5}/>, id: "6"},
 	]
 	const { colors } = useTheme();
 	return (
 		
-		<ScrollView styles={styles.container} contentContainerStyle={{marginTop: 50, paddingBottom: 60, marginLeft: 10, marginRight:10 , justifyContent: "center",  alignItems: "center"}}>
+		<ScrollView style={styles.container} contentContainerStyle={{marginTop: 50, paddingBottom: 60, marginLeft: 10, marginRight:10 , justifyContent: "center",  alignItems: "center"}}>
+			<Text style={{alignSelf:"center" , fontWeight:"bold"}}>Hello, {firstName} {lastName}!</Text>
 			<UploadImage style={{alignSelf: "center"}}/>
-			<FlatList
-				horizontal={true}
-				data={DATA}
-				style={{marginTop:"5%", marginBottom: "5%"}}
-				
-				showsHorizontalScrollIndicator={false}
-				contentContainerStyle={{
-					paddingHorizontal: SPACING
-				}}
-				keyExtractor={item => item.id}
-				renderItem={({ item, index }) => (
-					<TouchableOpacity activeOpacity={0.9}>
-					<UploadImageList
-						style={{
-						width: THUMB_SIZE,
-						height: THUMB_SIZE,
-						marginRight: SPACING,
-						borderRadius: 16,
-						//borderWidth: index === indexSelected ? 4 : 0.75,
-						//borderColor: index === indexSelected ? 'orange' : 'white'
-						}}
-					/>
-					</TouchableOpacity>
-				)}
-				/>
-
-			<Text style={{alignSelf:"center" , fontWeight:"bold"}}>James Chen</Text>
 			<View style={styles.action}>
-				<Feather name="info" color={colors.text} size={20} />
+				<Feather name="info" color={colors.text} size={20} /> 
 				<TextInput
-				placeholder="Biography"
+				placeholder={bio}
 				placeholderTextColor="#666666"
 				autoCorrect={false}
 				style={[
@@ -76,7 +110,7 @@ const ProfileScreen = ({ navigation }) => {
 			<View style={styles.action}>
 				<FontAwesome name="user-o" color={colors.text} size={20} />
 				<TextInput
-				placeholder="First Name"
+				placeholder={firstName + " " + lastName}
 				placeholderTextColor="#666666"
 				autoCorrect={false}
 				style={[
@@ -87,24 +121,11 @@ const ProfileScreen = ({ navigation }) => {
 				]}
 				/>
 			</View>
-			<View style={styles.action}>
-			<FontAwesome name="user-o" color={colors.text} size={20} />
-			<TextInput
-				placeholder="Last Name"
-				placeholderTextColor="#666666"
-				autoCorrect={false}
-				style={[
-				styles.textInput,
-				{
-					color: colors.text,
-				},
-				]}
-			/>
-			</View>
+			
 			<View style={styles.action}>
 			<Feather name="phone" color={colors.text} size={20} />
 			<TextInput
-				placeholder="Phone"
+				placeholder={phone}
 				placeholderTextColor="#666666"
 				keyboardType="number-pad"
 				autoCorrect={false}
@@ -119,7 +140,7 @@ const ProfileScreen = ({ navigation }) => {
 			<View style={styles.action}>
 			<FontAwesome name="envelope-o" color={colors.text} size={20} />
 			<TextInput
-				placeholder="Email"
+				placeholder={email}
 				placeholderTextColor="#666666"
 				keyboardType="email-address"
 				autoCorrect={false}
@@ -134,7 +155,7 @@ const ProfileScreen = ({ navigation }) => {
 			<View style={styles.action}>
 			<FontAwesome name="globe" color={colors.text} size={20} />
 			<TextInput
-				placeholder="Country"
+				placeholder={country}
 				placeholderTextColor="#666666"
 				autoCorrect={false}
 				style={[
@@ -148,7 +169,7 @@ const ProfileScreen = ({ navigation }) => {
 			<View style={styles.action}>
 			<Icon name="map-marker-outline" color={colors.text} size={20} />
 			<TextInput
-				placeholder="City"
+				placeholder={city}
 				placeholderTextColor="#666666"
 				autoCorrect={false}
 				style={[
@@ -159,6 +180,34 @@ const ProfileScreen = ({ navigation }) => {
 				]}
 			/>
 			</View>
+
+			<FlatList
+				horizontal={true}
+				data={DATA}
+				style={{marginTop:"5%", marginBottom: "5%"}}
+				
+				showsHorizontalScrollIndicator={false}
+				contentContainerStyle={{
+					paddingHorizontal: SPACING
+				}}
+				keyExtractor={item => item.id}
+				renderItem={({ item, index }) => (
+					<TouchableOpacity activeOpacity={0.9}>
+					<UploadImageList
+						list_num = {index}
+						style={{
+						width: THUMB_SIZE,
+						height: THUMB_SIZE,
+						marginRight: SPACING,
+						borderRadius: 16,
+						//borderWidth: index === indexSelected ? 4 : 0.75,
+						//borderColor: index === indexSelected ? 'orange' : 'white'
+						}}
+					/>
+					</TouchableOpacity>
+				)}
+				/>
+
 			<TouchableOpacity style={styles.commandButton} onPress={() => {}}>
           		<Text style={styles.panelButtonTitle}>Update Profile</Text>
         	</TouchableOpacity>
@@ -170,9 +219,10 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
 	container: {
-	  flex: 1,
-	  backgroundColor: "#fff"
+		backgroundColor: "#fff",
+		padding: "0%",
 	},
+
 	commandButton: {
 	  padding: 15,
 	  borderRadius: 10,
@@ -180,49 +230,8 @@ const styles = StyleSheet.create({
 	  alignItems: 'center',
 	  marginTop: 10,
 	},
-	panel: {
-	  padding: 20,
-	  backgroundColor: '#FFFFFF',
-	  paddingTop: 20,
-	},
-	header: {
-	  backgroundColor: '#FFFFFF',
-	  shadowColor: '#333333',
-	  shadowOffset: {width: -1, height: -3},
-	  shadowRadius: 2,
-	  shadowOpacity: 0.4,
-	  // elevation: 5,
-	  paddingTop: 20,
-	  borderTopLeftRadius: 20,
-	  borderTopRightRadius: 20,
-	},
-	panelHeader: {
-	  alignItems: 'center',
-	},
-	panelHandle: {
-	  width: 40,
-	  height: 8,
-	  borderRadius: 4,
-	  backgroundColor: '#00000040',
-	  marginBottom: 10,
-	},
-	panelTitle: {
-	  fontSize: 27,
-	  height: 35,
-	},
-	panelSubtitle: {
-	  fontSize: 14,
-	  color: 'gray',
-	  height: 30,
-	  marginBottom: 10,
-	},
-	panelButton: {
-	  padding: 13,
-	  borderRadius: 10,
-	  backgroundColor: '#FF6347',
-	  alignItems: 'center',
-	  marginVertical: 7,
-	},
+	
+	
 	panelButtonTitle: {
 	  fontSize: 17,
 	  fontWeight: 'bold',
@@ -232,21 +241,22 @@ const styles = StyleSheet.create({
 	  flexDirection: 'row',
 	  marginTop: 10,
 	  marginBottom: 10,
-	  borderBottomWidth: 1,
-	  borderBottomColor: '#f2f2f2',
-	  paddingBottom: 5,
+	  paddingVertical: 10,
+	  backgroundColor:"white"
 	},
 	actionError: {
 	  flexDirection: 'row',
 	  marginTop: 10,
 	  borderBottomWidth: 1,
-	  borderBottomColor: '#FF0000',
+	  borderBottomColor: '#A9F5FF',
 	  paddingBottom: 5,
 	},
 	textInput: {
-	  flex: 1,
+	  flex:2,
 	  marginTop: Platform.OS === 'ios' ? 0 : -12,
-	  paddingLeft: 10,
-	  color: '#05375a',
+	  marginLeft: 20,
+	  marginRight: 20,
+	  color: 'black',
+	  backgroundColor:'white'
 	},
   });
