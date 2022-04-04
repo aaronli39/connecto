@@ -5,7 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { getDatabase, ref, onValue, set } from 'firebase/database';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-
+import { CONFIGS } from "../constants/config.js"
 import { getFirestore, setDoc, doc, getDoc } from 'firebase/firestore';
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -14,7 +14,7 @@ import { getFirestore, setDoc, doc, getDoc } from 'firebase/firestore';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "",
+  apiKey: CONFIGS.FIRE_BASE_API,
   authDomain: "xc475-connecto.firebaseapp.com",
   projectId: "xc475-connecto",
   storageBucket: "xc475-connecto.appspot.com",

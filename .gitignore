@@ -24,3 +24,5 @@ yarn-error.log*
 
 __pycache__
 .expo
+
+/src/constants/config.js
