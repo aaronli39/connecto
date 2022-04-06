@@ -8,17 +8,12 @@ import {
 	Keyboard,
 	TouchableWithoutFeedback,
 } from "react-native";
-import {
-	Button,
-	TextInput,
-	Card,
-	Title,
-	Paragraph,
-	useTheme,
-} from "react-native-paper";
+import { Button, Searchbar, useTheme } from "react-native-paper";
 import { CONSTANTS } from "../constants/DataConstants";
+import EventCard from "../components/EventCard";
+import SearchBar from "react-native-platform-searchbar";
 
-const EventSearch = ({ navigation }) => {
+const EventSearch = () => {
 	const { colors } = useTheme();
 	const styles = StyleSheet.create({
 		container: {
@@ -35,25 +30,15 @@ const EventSearch = ({ navigation }) => {
 		searchButton: {
 			width: "50%",
 			alignSelf: "center",
-			marginTop: 10,
+			marginTop: 20,
 		},
 		searchBox: {
 			marginTop: 40,
-			width: 240,
+			width: "90%",
+			maxWidth: 340,
+			borderRadius: 20,
 			alignSelf: "center",
-		},
-		cardContainer: {
-			marginTop: 20,
-			borderRadius: 10,
-			elevation: 8,
-			borderColor: colors.primary,
-			borderStyle: "solid",
-			borderWidth: 1,
-		},
-		cardCover: {
-			marginTop: 8,
-			width: "50%",
-			alignSelf: "center",
+			justifyContent: "center",
 		},
 	});
 
@@ -69,7 +54,7 @@ const EventSearch = ({ navigation }) => {
 		axios
 			.get(url)
 			.then((response) => {
-				// console.log(response.data.events_results);
+				console.log(response.data.events_results);
 				let data = response.data.events_results;
 				setEventList(data);
 			})
@@ -80,15 +65,19 @@ const EventSearch = ({ navigation }) => {
 
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-			<ScrollView style={styles.container}>
+			<ScrollView
+				style={styles.container}
+				keyboardShouldPersistTaps="handled"
+				alignContent="center"
+			>
 				<Text style={styles.welcomeMessageText}>
 					Welcome! Search for an event below!
 				</Text>
-				<TextInput
-					label="Search Event"
+				<SearchBar
 					value={searchInput}
-					placeholder="enter event..."
+					placeholder="enter an event..."
 					style={styles.searchBox}
+					cancelText=""
 					onChangeText={(text) => setSearchInput(text)}
 				/>
 				<Button
@@ -98,18 +87,9 @@ const EventSearch = ({ navigation }) => {
 				>
 					Search
 				</Button>
-				
+
 				{eventList.map((event, idx) => (
-					<Card key={idx} style={styles.cardContainer}>
-						<Card.Content style={styles.cardContent}>
-							<Title>{event.title}</Title>
-							<Paragraph>{event.description}</Paragraph>
-							<Card.Cover
-								style={styles.cardCover}
-								source={{ uri: `${event?.thumbnail}` }}
-							/>
-						</Card.Content>
-					</Card>
+					<EventCard key={idx} event={event} />
 				))}
 			</ScrollView>
 		</TouchableWithoutFeedback>
