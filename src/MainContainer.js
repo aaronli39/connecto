@@ -44,9 +44,21 @@ export default function MainContainer() {
 					},
 				})}
 			>
-				<Tab.Screen name={homeName} component={EventSearch} />
-				<Tab.Screen name={profileName} component={ProfileScreen} />
-				<Tab.Screen name={swipeName} component={Swipe} />
+				<Tab.Screen
+					options={{ headerShown: false }}
+					name={homeName}
+					component={EventSearch}
+				/>
+				<Tab.Screen
+					options={{ headerShown: false }}
+					name={profileName}
+					component={ProfileScreen}
+				/>
+				<Tab.Screen
+					options={{ headerShown: false }}
+					name={swipeName}
+					component={Swipe}
+				/>
 			</Tab.Navigator>
 		</NavigationContainer>
 	);
