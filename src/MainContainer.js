@@ -2,6 +2,8 @@ import * as React from "react";
 import { NavigationContainer, TabActions } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import EventSearch from "./views/EventSearch";
 import ProfileScreen from "./views/ProfileScreen";
@@ -20,6 +22,9 @@ export default function MainContainer() {
 				fixed: "bottom",
 			}}
 		>
+			<SafeAreaView>
+				<StatusBar />
+			</SafeAreaView>
 			<Tab.Navigator
 				style={{
 					backgroundColor: "#071740",

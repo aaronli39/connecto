@@ -7,6 +7,7 @@ import {
 	ScrollView,
 	Keyboard,
 	TouchableWithoutFeedback,
+	FlatList,
 } from "react-native";
 import { Button, Searchbar, useTheme } from "react-native-paper";
 import { CONSTANTS } from "../constants/DataConstants";
@@ -54,7 +55,6 @@ const EventSearch = () => {
 		axios
 			.get(url)
 			.then((response) => {
-				console.log(response.data.events_results);
 				let data = response.data.events_results;
 				setEventList(data);
 			})
@@ -88,9 +88,16 @@ const EventSearch = () => {
 					Search
 				</Button>
 
-				{eventList.map((event, idx) => (
+				<FlatList
+					columnWrapperStyle={{ justifyContent: "space-around" }}
+					data={eventList}
+					numColumns={2}
+					keyExtractor={(event, idx) => idx}
+					renderItem={(ev) => <EventCard event={ev.item} />}
+				/>
+				{/* {eventList.map((event, idx) => (
 					<EventCard key={idx} event={event} />
-				))}
+				))} */}
 			</ScrollView>
 		</TouchableWithoutFeedback>
 	);
