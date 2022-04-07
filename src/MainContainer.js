@@ -8,10 +8,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import EventSearch from "./views/EventSearch";
 import ProfileScreen from "./views/ProfileScreen";
 import Swipe from "./views/Swipe";
+import Events from "./views/Events";
 
 const homeName = "Home";
 const profileName = "Profile";
 const swipeName = "Swipe";
+const eventsName = "Events";
 const Tab = createBottomTabNavigator();
 export default function MainContainer() {
 	return (
@@ -43,6 +45,8 @@ export default function MainContainer() {
 							iconName = focused ? "person" : "person-outline";
 						} else if (routeName === swipeName) {
 							iconName = focused ? "person" : "person-outline";
+						} else if (routeName === eventsName) {
+							iconName = focused ? "calendar" : "calendar-outline";
 						}
 
 						return <Ionicons name={iconName} size={size} color={color} />;
@@ -53,6 +57,11 @@ export default function MainContainer() {
 					options={{ headerShown: false }}
 					name={homeName}
 					component={EventSearch}
+				/>
+				<Tab.Screen
+					options={{ headerShown: false }}
+					name={eventsName}
+					component={Events}
 				/>
 				<Tab.Screen
 					options={{ headerShown: false }}
