@@ -4,6 +4,23 @@ import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import EventCard from "../components/EventCard";
 import { CONSTANTS } from "../constants/DataConstants";
 import axios from "axios";
+import { initializeApp } from "firebase/app";
+import { getFirestore, setDoc, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { CONFIGS } from "../constants/config.js"
+
+const firebaseConfig = {
+	apiKey: CONFIGS.FIRE_BASE_API,
+	authDomain: "xc475-connecto.firebaseapp.com",
+	projectId: "xc475-connecto",
+	storageBucket: "xc475-connecto.appspot.com",
+	messagingSenderId: "473690460289",
+	appId: "1:473690460289:web:86a6549aa86764b41b7d80",
+	measurementId: "G-RNJ8PM5ZVK"
+  };
+  
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const firestore = getFirestore(app);
 
 const CurrentEvents = () => {
 	const [eventsList, setEventsList] = useState([]);
@@ -11,21 +28,22 @@ const CurrentEvents = () => {
 	// REMOVE CODE POINT #1
 	// TEMPORARY DUMMY DATA, REMOVE AFTER
 	// FETCH FROM FIRESTORE WORKS
-	const fetchSearchResults = () => {
+	const fetchMyEventList = () => {
 		console.log("fetching now...");
-		const searchTerm = "concerts in boston";
-		console.log(searchTerm);
-		const url = CONSTANTS.serpApiP1 + searchTerm + CONSTANTS.serpApiP2;
-		axios
-			.get(url)
-			.then((response) => {
-				let data = response.data.events_results;
-				console.log(data);
-				setEventsList(data);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		const docRef = doc(firestore, 'users', "DdRPo2lJfFbBcqkzAhXz");
+		getDoc(docRef).then(doc =>{
+			if(doc.exists){
+				console.log("Document Data:" , doc.data().myEvents);
+				setEventsList(doc.data().myEvents);
+				console.log("eventsList: ", eventsList);
+				}
+			else{
+				console.log("No such document");
+			}
+		})
+		.catch(error => {
+			console.log(error);
+		})
 	};
 
 	useEffect(async () => {
@@ -34,8 +52,8 @@ const CurrentEvents = () => {
 		// use setEventsList(<firebase data>) (it should be a list),
 		// REMOVE this following line
 		console.log("fetching....");
-		fetchSearchResults();
-	}, []);
+		fetchMyEventList();
+	}, [eventsList]);
 
 	return (
 		// outer view to encompass entire page

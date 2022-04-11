@@ -1,23 +1,56 @@
 import React from "react";
 import { Card } from "react-native-paper";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
+import { getDatabase, ref, onValue, set } from 'firebase/database';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getFirestore, setDoc, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { CONFIGS } from "../constants/config.js"
 
+const firebaseConfig = {
+	apiKey: CONFIGS.FIRE_BASE_API,
+	authDomain: "xc475-connecto.firebaseapp.com",
+	projectId: "xc475-connecto",
+	storageBucket: "xc475-connecto.appspot.com",
+	messagingSenderId: "473690460289",
+	appId: "1:473690460289:web:86a6549aa86764b41b7d80",
+	measurementId: "G-RNJ8PM5ZVK"
+  };
+  
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+  const firestore = getFirestore(app);
 // this component serves to contain an invidual event card
 const EventCard = ({ event }) => {
 	return (
-		<Card style={styles.cardContainer}>
-			<Card.Content style={styles.cardContent}>
-				<Card.Cover
-					style={styles.cardCover}
-					source={{ uri: `${event?.thumbnail}` }}
-					resizeMode="stretch"
-				/>
-				<View style={styles.cardTextBackground}>
-					<Text style={styles.cardTextLeft}>{event?.date?.start_date}</Text>
-					<Text style={styles.cardTextRight}>{event?.title}</Text>
-				</View>
-			</Card.Content>
-		</Card>
+				<Card style={styles.cardContainer}>
+					<Card.Content style={styles.cardContent}>
+						<Pressable onPress={ () =>{
+							const docRef = doc(firestore, 'users', "DdRPo2lJfFbBcqkzAhXz");
+							updateDoc(docRef, {
+								myEvents: arrayUnion({
+								thumbnail: event?.thumbnail,
+								start_date: event?.date?.start_date, 
+								title: event?.title
+								})
+							}
+							);
+							console.log("pressed");
+							alert("Event Sucessfully Added!");
+						}}>
+							<Card.Cover
+								style={styles.cardCover}
+								source={{ uri: `${event?.thumbnail}` }}
+								resizeMode="stretch"
+							/>
+							<View style={styles.cardTextBackground}>
+								<Text style={styles.cardTextLeft}>{event?.date?.start_date}</Text>
+								<Text style={styles.cardTextRight}>{event?.title}</Text>
+							</View>
+						</Pressable>
+					</Card.Content>
+				</Card>
 	);
 };
 
