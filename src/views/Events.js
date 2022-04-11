@@ -1,9 +1,16 @@
 import Constants from "expo-constants";
 import React from "react";
-import { View, Text, StyleSheet, useWindowDimensions } from "react-native";
+import {
+	View,
+	Text,
+	StyleSheet,
+	useWindowDimensions,
+	Image,
+} from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import CurrentEvents from "./CurrentEvents";
 import PastEvents from "./PastEvents";
+import ProfilePictureStockPhoto from "../assets/pfp-stock.jpg";
 
 // styling for the tab bar
 const renderTabBar = (props) => (
@@ -41,6 +48,13 @@ const Events = () => {
 	return (
 		// outer view for the tabs
 		<View style={{ backgroundColor: "white", height: "100%" }}>
+			<View style={styles.profilePictureContainer}>
+				<Image
+					source={ProfilePictureStockPhoto}
+					style={{ width: 100, height: 100, borderRadius: 100 / 2 }}
+				/>
+				<Text style={styles.profilePictureText}>Sample User</Text>
+			</View>
 			<Text style={styles.welcomeMessageText}>Your Events</Text>
 			<TabView
 				renderTabBar={renderTabBar}
@@ -60,12 +74,24 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		padding: "4%",
 	},
+	profilePictureContainer: {
+		marginTop: Constants.statusBarHeight / 2,
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "center",
+		flexWrap: "wrap",
+	},
+	profilePictureText: {
+		width: "100%",
+		textAlign: "center",
+		marginTop: Constants.statusBarHeight / 5,
+	},
 	welcomeMessageText: {
 		fontWeight: "bold",
 		fontSize: 24,
 		textAlign: "center",
 		width: "100%",
-		marginTop: Constants.statusBarHeight,
-		marginBottom: Constants.statusBarHeight,
+		marginTop: Constants.statusBarHeight / 2,
+		marginBottom: Constants.statusBarHeight / 2,
 	},
 });
