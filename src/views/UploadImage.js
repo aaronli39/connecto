@@ -2,33 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Image, View, Platform, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { getDatabase, ref, onValue, set } from 'firebase/database';
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { app } from "./FirebaseInitialize";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { getFirestore, setDoc, doc, getDoc } from 'firebase/firestore';
-import { CONFIGS } from "../constants/config.js"
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: CONFIGS.FIRE_BASE_API,
-  authDomain: "xc475-connecto.firebaseapp.com",
-  projectId: "xc475-connecto",
-  storageBucket: "xc475-connecto.appspot.com",
-  messagingSenderId: "473690460289",
-  appId: "1:473690460289:web:86a6549aa86764b41b7d80",
-  measurementId: "G-RNJ8PM5ZVK"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+// const database = getDatabase(app);
 const firestore = getFirestore(app);
-
-
-
+const storage = getStorage(app);
 
 export default function UploadImage() {
     const docRef = doc(firestore, 'users', "DdRPo2lJfFbBcqkzAhXz");
@@ -47,6 +28,31 @@ export default function UploadImage() {
 		console.log(error);
 	})
  const [image, setImage] = useState(null);
+ function dataURItoBlob(dataURI) {
+    // convert base64 to raw binary data held in a string
+    // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+    var byteString = atob(dataURI.split(',')[1]);
+  
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+  
+    // write the bytes of the string to an ArrayBuffer
+    var ab = new ArrayBuffer(byteString.length);
+  
+    // create a view into the buffer
+    var ia = new Uint8Array(ab);
+  
+    // set the bytes of the buffer to the correct values
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+  
+    // write the ArrayBuffer to a blob, and you're done
+    var blob = new Blob([ab], {type: mimeString});
+    return blob;
+  
+  }
+
  const addImage= async ()=>{
     let image_to_add = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -58,6 +64,22 @@ export default function UploadImage() {
     if(!image_to_add.cancelled){
         setImage(image_to_add.uri);
     }
+
+    let path = "images/profilepic.jpg";
+    let imageName = "images/profilepic.jpg";
+    let reference = ref(storage, imageName);
+    var message = await (await fetch(image_to_add.uri)).blob();
+    // uploadString(reference, message, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
+    //     console.log('Uploaded a blob or file!');
+    //   });
+    await uploadBytes(reference, message, {contentType: 'image/jpeg' }).then((snapshot) => {
+        console.log('Uploaded a blob or file!');
+      });
+    // let task = reference.putFile(path);               // 3
+
+    // task.then(() => {                                 // 4
+    //     console.log('Image uploaded to the bucket!');
+    // }).catch((e) => console.log('uploading image error => ', e));
  };
     
  return (

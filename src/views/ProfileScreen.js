@@ -13,31 +13,13 @@ import Feather from 'react-native-vector-icons/Feather';
 import UploadImageList from "./UploadImageList";
 import { getDatabase, ref, onValue, set } from 'firebase/database';
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getFirestore, setDoc, doc, collection, getDocs, getDoc, DocumentSnapshot} from 'firebase/firestore';
-import { CONFIGS } from "../constants/config.js"
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: CONFIGS.FIRE_BASE_API,
-  authDomain: "xc475-connecto.firebaseapp.com",
-  projectId: "xc475-connecto",
-  storageBucket: "xc475-connecto.appspot.com",
-  messagingSenderId: "473690460289",
-  appId: "1:473690460289:web:86a6549aa86764b41b7d80",
-  measurementId: "G-RNJ8PM5ZVK"
-};
-
-	
+import { app } from "./FirebaseInitialize";
+import { getFirestore, setDoc, doc, collection, getDocs, getDoc, DocumentSnapshot} from 'firebase/firestore';	
 
 
 // THIS IS JUST A TEST FILE FOR NAVIGATION, PLEASE DELETE OR REPLACE THIS COMPONENT!
 const ProfileScreen = ({ navigation }) => {
 	// Initialize Firebase
-	const app = initializeApp(firebaseConfig);
 	const firestore = getFirestore(app);
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
