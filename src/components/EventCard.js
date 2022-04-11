@@ -5,20 +5,8 @@ import { getDatabase, ref, onValue, set } from 'firebase/database';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, setDoc, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
-import { CONFIGS } from "../constants/config.js"
-
-const firebaseConfig = {
-	apiKey: CONFIGS.FIRE_BASE_API,
-	authDomain: "xc475-connecto.firebaseapp.com",
-	projectId: "xc475-connecto",
-	storageBucket: "xc475-connecto.appspot.com",
-	messagingSenderId: "473690460289",
-	appId: "1:473690460289:web:86a6549aa86764b41b7d80",
-	measurementId: "G-RNJ8PM5ZVK"
-  };
-  
+import { app } from "../views/FirebaseInitialize";
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
   const database = getDatabase(app);
   const firestore = getFirestore(app);
 // this component serves to contain an invidual event card
