@@ -5,44 +5,43 @@ import EventCard from "../components/EventCard";
 import { CONSTANTS } from "../constants/DataConstants";
 import axios from "axios";
 import { initializeApp } from "firebase/app";
-import { getFirestore, setDoc, doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import {
+	getFirestore,
+	setDoc,
+	doc,
+	getDoc,
+	updateDoc,
+	arrayUnion,
+} from "firebase/firestore";
 import { app } from "./FirebaseInitialize";
-  
-  // Initialize Firebase
-  const firestore = getFirestore(app);
+
+// Initialize Firebase
+const firestore = getFirestore(app);
 
 const CurrentEvents = () => {
 	const [eventsList, setEventsList] = useState([]);
 
-	// REMOVE CODE POINT #1
-	// TEMPORARY DUMMY DATA, REMOVE AFTER
-	// FETCH FROM FIRESTORE WORKS
+	// fetch user John Doe's events
 	const fetchMyEventList = () => {
 		console.log("fetching now...");
-		const docRef = doc(firestore, 'users', "DdRPo2lJfFbBcqkzAhXz");
-		getDoc(docRef).then(doc =>{
-			if(doc.exists){
-				console.log("Document Data:" , doc.data().myEvents);
-				setEventsList(doc.data().myEvents);
-				console.log("eventsList: ", eventsList);
+		const docRef = doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz");
+		getDoc(docRef)
+			.then((doc) => {
+				if (doc.exists) {
+					setEventsList(doc.data().myEvents);
+				} else {
+					console.log("No such document");
 				}
-			else{
-				console.log("No such document");
-			}
-		})
-		.catch(error => {
-			console.log(error);
-		})
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	};
 
 	useEffect(async () => {
-		// REMOVE CODE POINT #2
-		// put firebase fetching code here and then
-		// use setEventsList(<firebase data>) (it should be a list),
-		// REMOVE this following line
 		console.log("fetching....");
 		fetchMyEventList();
-	}, [eventsList]);
+	}, []);
 
 	return (
 		// outer view to encompass entire page
