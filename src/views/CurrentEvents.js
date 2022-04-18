@@ -12,12 +12,14 @@ import {
 	getDoc,
 	updateDoc,
 	arrayUnion,
+	onSnapshot,
 } from "firebase/firestore";
 import { app } from "./FirebaseInitialize";
 
 // Initialize Firebase
 const firestore = getFirestore(app);
 
+// this component contains the view for the current events tab
 const CurrentEvents = () => {
 	const [eventsList, setEventsList] = useState([]);
 
@@ -41,6 +43,16 @@ const CurrentEvents = () => {
 	useEffect(async () => {
 		console.log("fetching....");
 		fetchMyEventList();
+
+		const unsub = onSnapshot(
+			doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz"),
+			(doc) => {
+				setEventsList(doc.data().myEvents);
+			},
+			(error) => console.log(error)
+		);
+
+		return () => unsub;
 	}, []);
 
 	return (

@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-// component to display past events the user has
+// this component contains the view for the past events
 const PastEvents = () => {
 	// TODO: add state + useEffect hooks here in order
 	// to fetch some dummy events that have "passed" from
