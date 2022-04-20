@@ -20,28 +20,11 @@ import { app } from "./FirebaseInitialize";
 const firestore = getFirestore(app);
 
 // this component contains the view for the current events tab
-const CurrentEvents = () => {
+const CurrentEvents = ({ nav }) => {
 	const [eventsList, setEventsList] = useState([]);
 
-	// fetch user John Doe's events
-	const fetchMyEventList = () => {
-		console.log("fetching now...");
-		const docRef = doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz");
-		getDoc(docRef)
-			.then((doc) => {
-				if (doc.exists) {
-					setEventsList(doc.data().myEvents);
-				} else {
-					console.log("No such document");
-				}
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	};
-
+	// on page load, fetch all user's events
 	useEffect(async () => {
-		console.log("fetching....");
 		fetchMyEventList();
 
 		const unsub = onSnapshot(
@@ -55,26 +38,56 @@ const CurrentEvents = () => {
 		return () => unsub;
 	}, []);
 
+	// fetch user John Doe's events
+	const fetchMyEventList = () => {
+		const docRef = doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz");
+		getDoc(docRef)
+			.then((doc) => {
+				if (doc.exists) {
+					console.log("doc exists, setting data...");
+					setEventsList(doc.data().myEvents);
+				} else {
+					console.log("No such document");
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
+	// navigate to specific event details page
+	const viewEventDetailsPage = (event) => {
+		nav.navigate("Event Details", event);
+	};
+
 	return (
 		// outer view to encompass entire page
 		<View style={{ backgroundColor: "white", height: "100%" }}>
-			{/* Flatlist renders all the events, and the header component is all the 
-        ui components before that  */}
-			<FlatList
-				ListHeaderComponent={
-					<ScrollView
-						style={styles.container}
-						keyboardShouldPersistTaps="handled"
-						alignContent="center"
-					></ScrollView>
-				}
-				columnWrapperStyle={{ justifyContent: "space-around" }}
-				data={eventsList}
-				numColumns={2}
-				keyExtractor={(event, idx) => idx}
-				renderItem={(ev) => <EventCard event={ev.item} />}
-				ListFooterComponent={<View style={{ height: 24 }}></View>}
-			/>
+			<ScrollView
+				style={styles.container}
+				keyboardShouldPersistTaps="handled"
+				alignContent="center"
+			>
+				{/* display the event cards */}
+				<View style={styles.eventListContainer}>
+					{/* if null, show message, otherwise render cards*/}
+					{eventsList?.length === 0 ? (
+						<View style={{ marginTop: 100 }}>
+							<Text style={{ textAlign: "center" }}>
+								You have no events! Go add some from the home page!
+							</Text>
+						</View>
+					) : (
+						eventsList?.map((ev, idx) => (
+							<EventCard
+								event={ev}
+								key={idx}
+								onClickEvent={viewEventDetailsPage}
+							/>
+						))
+					)}
+				</View>
+			</ScrollView>
 		</View>
 	);
 };
@@ -93,5 +106,12 @@ const styles = StyleSheet.create({
 		width: "100%",
 		marginTop: Constants.statusBarHeight,
 		marginBottom: Constants.statusBarHeight,
+	},
+	eventListContainer: {
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "space-around",
+		flexWrap: "wrap",
+		paddingBottom: 48,
 	},
 });

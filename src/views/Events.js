@@ -34,15 +34,8 @@ const renderTabBar = (props) => (
 	/>
 );
 
-// contains the routes and the components
-// associated with the specific route
-const renderScene = SceneMap({
-	first: CurrentEvents,
-	second: PastEvents,
-});
-
 // this component contains the container logic for the Events tab view
-const Events = () => {
+const Events = ({ navigation }) => {
 	const layout = useWindowDimensions();
 	const [index, setIndex] = React.useState(0);
 	const [firstname, setFirstname] = React.useState(" ");
@@ -52,6 +45,14 @@ const Events = () => {
 		{ key: "first", title: "Current Events" },
 		{ key: "second", title: "Past Events" },
 	]);
+
+	// contains the routes and the components
+	// associated with the specific route
+	// also pass navigation prop
+	const renderScene = SceneMap({
+		first: () => <CurrentEvents nav={navigation} />,
+		second: PastEvents,
+	});
 
 	useEffect(() => {
 		// fetch user profile data for events page

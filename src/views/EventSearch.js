@@ -1,5 +1,5 @@
 import Constants from "expo-constants";
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import {
 	StyleSheet,
@@ -7,7 +7,6 @@ import {
 	ScrollView,
 	Keyboard,
 	TouchableWithoutFeedback,
-	FlatList,
 	View,
 } from "react-native";
 import { Button } from "react-native-paper";
@@ -15,10 +14,12 @@ import { CONSTANTS } from "../constants/DataConstants";
 import EventCard from "../components/EventCard";
 import SearchBar from "react-native-platform-searchbar";
 
-const EventSearch = () => {
+// this component renders the home page that allows users to search for an event
+const EventSearch = ({ navigation }) => {
 	const [searchInput, setSearchInput] = useState("");
 	const [eventList, setEventList] = useState([]);
 
+	// do api call to fetch results
 	const fetchSearchResults = () => {
 		Keyboard.dismiss();
 		console.log("fetching now...");
@@ -36,50 +37,49 @@ const EventSearch = () => {
 			});
 	};
 
+	// navigate to specific event details page
+	const viewEventDetailsPage = (event) => {
+		navigation.navigate("Event Details", event);
+	};
+
 	return (
 		// outer view to encompass entire page
-		<View style={{ backgroundColor: "white", height: "100%" }}>
-			{/* Flatlist renders all the events, and the header component is all the 
-			ui components before that  */}
-			<FlatList
-				ListHeaderComponent={
-					<TouchableWithoutFeedback
-						onPress={Keyboard.dismiss}
-						accessible={false}
-					>
-						<ScrollView
-							style={styles.container}
-							keyboardShouldPersistTaps="handled"
-							alignContent="center"
-						>
-							<Text style={styles.welcomeMessageText}>
-								Welcome! Search for an event below!
-							</Text>
-							<SearchBar
-								value={searchInput}
-								placeholder="enter an event..."
-								style={styles.searchBox}
-								cancelText=""
-								onChangeText={(text) => setSearchInput(text)}
-							/>
-							<Button
-								mode="outlined"
-								style={styles.searchButton}
-								onPress={fetchSearchResults}
-							>
-								Search
-							</Button>
-						</ScrollView>
-					</TouchableWithoutFeedback>
-				}
-				columnWrapperStyle={{ justifyContent: "space-around" }}
-				data={eventList}
-				numColumns={2}
-				keyExtractor={(event, idx) => idx}
-				renderItem={(ev) => <EventCard event={ev.item} />}
-				ListFooterComponent={<View style={{ height: 24 }}></View>}
-			/>
-		</View>
+		<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+			<ScrollView
+				style={styles.container}
+				keyboardShouldPersistTaps="handled"
+				alignContent="center"
+			>
+				<Text style={styles.welcomeMessageText}>
+					Welcome! Search for an event below!
+				</Text>
+				<SearchBar
+					value={searchInput}
+					placeholder="enter an event..."
+					style={styles.searchBox}
+					cancelText=""
+					onChangeText={(text) => setSearchInput(text)}
+				/>
+				<Button
+					mode="outlined"
+					style={styles.searchButton}
+					onPress={fetchSearchResults}
+				>
+					Search
+				</Button>
+
+				{/* display the event cards */}
+				<View style={styles.eventListContainer}>
+					{eventList?.map((ev, idx) => (
+						<EventCard
+							event={ev}
+							key={idx}
+							onClickEvent={viewEventDetailsPage}
+						/>
+					))}
+				</View>
+			</ScrollView>
+		</TouchableWithoutFeedback>
 	);
 };
 
@@ -109,5 +109,12 @@ const styles = StyleSheet.create({
 		borderRadius: 20,
 		alignSelf: "center",
 		justifyContent: "center",
+	},
+	eventListContainer: {
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "space-around",
+		flexWrap: "wrap",
+		paddingBottom: 48,
 	},
 });
