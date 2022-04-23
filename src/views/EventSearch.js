@@ -33,7 +33,7 @@ const EventSearch = ({ navigation }) => {
 
 				// modify data to create data format consistency
 				let toAdd = [];
-				data.forEach(ev => {
+				data.forEach((ev) => {
 					let obj = {
 						thumbnail: ev?.thumbnail,
 						start_date: ev?.date?.start_date,
@@ -52,7 +52,7 @@ const EventSearch = ({ navigation }) => {
 
 	// navigate to specific event details page
 	const viewEventDetailsPage = (event) => {
-		navigation.navigate("Event Details", event);
+		navigation.navigate("Event Details", { ...event, buttonStyle: "accept" });
 	};
 
 	return (

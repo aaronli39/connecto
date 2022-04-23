@@ -19,7 +19,7 @@ const EventCard = ({ event, onClickEvent }) => {
 						resizeMode="stretch"
 					/>
 					<View style={styles.cardTextBackground}>
-						<Text style={styles.cardTextLeft}>{event?.date?.start_date}</Text>
+						<Text style={styles.cardTextLeft}>{event?.start_date}</Text>
 						<Text style={styles.cardTextRight}>{event?.title}</Text>
 					</View>
 				</Card.Content>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
 		borderRadius: 12,
 	},
 	cardContainer: {
-		borderRadius: 12	
+		borderRadius: 12,
 	},
 	cardContent: {
 		paddingHorizontal: 0,

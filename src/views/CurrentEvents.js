@@ -56,7 +56,7 @@ const CurrentEvents = ({ nav }) => {
 
 	// navigate to specific event details page
 	const viewEventDetailsPage = (event) => {
-		nav.navigate("Event Details", event);
+		nav.navigate("Event Details", { ...event, buttonStyle: "cancel" });
 	};
 
 	return (
