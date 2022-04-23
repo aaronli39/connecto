@@ -30,7 +30,20 @@ const EventSearch = ({ navigation }) => {
 			.get(url)
 			.then((response) => {
 				let data = response.data.events_results;
-				setEventList(data);
+
+				// modify data to create data format consistency
+				let toAdd = [];
+				data.forEach(ev => {
+					let obj = {
+						thumbnail: ev?.thumbnail,
+						start_date: ev?.date?.start_date,
+						title: ev?.title,
+						description: ev?.description,
+						venue: ev?.venue?.name,
+					};
+					toAdd.push(obj);
+				});
+				setEventList(toAdd);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -74,7 +87,7 @@ const EventSearch = ({ navigation }) => {
 						<EventCard
 							event={ev}
 							key={idx}
-							onClickEvent={viewEventDetailsPage}
+							onClickEvent={() => viewEventDetailsPage(ev)}
 						/>
 					))}
 				</View>

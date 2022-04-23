@@ -44,7 +44,6 @@ const CurrentEvents = ({ nav }) => {
 		getDoc(docRef)
 			.then((doc) => {
 				if (doc.exists) {
-					console.log("doc exists, setting data...");
 					setEventsList(doc.data().myEvents);
 				} else {
 					console.log("No such document");
@@ -82,7 +81,7 @@ const CurrentEvents = ({ nav }) => {
 							<EventCard
 								event={ev}
 								key={idx}
-								onClickEvent={viewEventDetailsPage}
+								onClickEvent={() => viewEventDetailsPage(ev)}
 							/>
 						))
 					)}

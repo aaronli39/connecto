@@ -12,16 +12,11 @@ const EventDetails = ({ route, navigation }) => {
 	const event = route.params;
 
 	// add an event to user's event list
-	const addToUserEvents = (event) => {
+	const addToUserEvents = () => {
+		console.log("adding: ", event);
 		const docRef = doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz");
 		updateDoc(docRef, {
-			myEvents: arrayUnion({
-				thumbnail: event?.thumbnail,
-				start_date: event?.date?.start_date,
-				title: event?.title,
-				description: event?.description,
-				venue: event?.venue?.name,
-			}),
+			myEvents: arrayUnion(event),
 		});
 		alert("Event Sucessfully Added!");
 	};
@@ -41,9 +36,13 @@ const EventDetails = ({ route, navigation }) => {
 			</View>
 
 			{/* Header row with date and title info */}
-			<View></View>
+			<View style={styles.headerContainer}>
+				<View>
 
-			<Button onPress={() => addToUserEvents(event)} mode="contained">
+				</View>
+			</View>
+
+			<Button onPress={addToUserEvents} mode="contained">
 				Add event!
 			</Button>
 		</ScrollView>
@@ -52,4 +51,9 @@ const EventDetails = ({ route, navigation }) => {
 
 export default EventDetails;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	headerContainer: {
+		display: "flex",
+		flexDirection: "row"
+	}
+});

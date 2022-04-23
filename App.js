@@ -20,7 +20,7 @@ export default function App() {
 				<Stack.Navigator initialRouteName={"Home"}>
 					<Stack.Screen
 						options={{ headerShown: false }}
-						name={"Home"}
+						name={"Home1"}
 						component={MainContainer}
 					/>
 					<Stack.Screen name={"Event Details"} component={EventDetails} />

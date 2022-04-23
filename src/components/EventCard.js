@@ -6,12 +6,12 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 const EventCard = ({ event, onClickEvent }) => {
 	return (
 		<Pressable
-			style={styles.cardContainer}
+			style={styles.outerContainer}
 			onPress={() => {
 				onClickEvent(event);
 			}}
 		>
-			<Card>
+			<Card style={styles.cardContainer}>
 				<Card.Content style={styles.cardContent}>
 					<Card.Cover
 						style={styles.cardCover}
@@ -31,12 +31,15 @@ const EventCard = ({ event, onClickEvent }) => {
 export default EventCard;
 
 const styles = StyleSheet.create({
-	cardContainer: {
+	outerContainer: {
 		marginTop: 20,
 		elevation: 8,
 		width: "44%",
 		aspectRatio: 1,
 		borderRadius: 12,
+	},
+	cardContainer: {
+		borderRadius: 12	
 	},
 	cardContent: {
 		paddingHorizontal: 0,
