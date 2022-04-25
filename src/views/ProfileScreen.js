@@ -82,6 +82,14 @@ const ProfileScreen = ({ navigation }) => {
   ];
   const { colors } = useTheme();
 
+  const updateName = (newText) => {
+    console.log(newText);
+    const words = newText.split(" ");
+    setFirstName(words[0]);
+    if (words.length > 1)
+      setLastName(words[1]);
+  }
+
   const sumbitProfile = async () => {
     console.log(
       "Submit",
@@ -120,108 +128,16 @@ const ProfileScreen = ({ navigation }) => {
         alignItems: "center",
       }}
     >
-      <Text style={{ alignSelf: "center", fontWeight: "bold" }}>
-        Hello, {firstName} {lastName}!
+      <UploadImage style={{ alignSelf: "center"}} />
+      <Text style={{ alignSelf: "center", fontSize: 15, marginRight: "35%", marginBottom: 40, }}>
+        <Text>{firstName}, </Text>
+        <Text style={{fontWeight: "bold"}}>26</Text>
       </Text>
-      <UploadImage style={{ alignSelf: "center" }} />
-      <View style={styles.action}>
-        <Feather name="info" color={colors.text} size={20} />
-        <TextInput
-          value={bio}
-          onChangeText={setBio}
-          placeholderTextColor="#666666"
-          autoCorrect={false}
-          style={[
-            styles.textInput,
-            {
-              color: colors.text,
-            },
-          ]}
-        />
-      </View>
-      <View style={styles.action}>
-        <FontAwesome name="user-o" color={colors.text} size={20} />
-        <TextInput
-          value={firstName + " " + lastName}
-          onChangeText={setFirstName}
-          placeholderTextColor="#666666"
-          autoCorrect={false}
-          style={[
-            styles.textInput,
-            {
-              color: colors.text,
-            },
-          ]}
-        />
-      </View>
-
-      <View style={styles.action}>
-        <Feather name="phone" color={colors.text} size={20} />
-        <TextInput
-          value={phone}
-          onChangeText={setPhone}
-          placeholderTextColor="#666666"
-          keyboardType="number-pad"
-          autoCorrect={false}
-          style={[
-            styles.textInput,
-            {
-              color: colors.text,
-            },
-          ]}
-        />
-      </View>
-      <View style={styles.action}>
-        <FontAwesome name="envelope-o" color={colors.text} size={20} />
-        <TextInput
-          value={email}
-          onChangeText={setEmail}
-          placeholderTextColor="#666666"
-          keyboardType="email-address"
-          autoCorrect={false}
-          style={[
-            styles.textInput,
-            {
-              color: colors.text,
-            },
-          ]}
-        />
-      </View>
-      <View style={styles.action}>
-        <FontAwesome name="globe" color={colors.text} size={20} />
-        <TextInput
-          value={country}
-          onChangeText={setCountry}
-          placeholderTextColor="#666666"
-          autoCorrect={false}
-          style={[
-            styles.textInput,
-            {
-              color: colors.text,
-            },
-          ]}
-        />
-      </View>
-      <View style={styles.action}>
-        <Icon name="map-marker-outline" color={colors.text} size={20} />
-        <TextInput
-          value={city}
-          onChangeText={setCity}
-          placeholderTextColor="#666666"
-          autoCorrect={false}
-          style={[
-            styles.textInput,
-            {
-              color: colors.text,
-            },
-          ]}
-        />
-      </View>
 
       <FlatList
         horizontal={true}
         data={DATA}
-        style={{ marginTop: "5%", marginBottom: "5%" }}
+        style={{ marginTop: "0%", marginBottom: "5%" }}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: SPACING,
@@ -241,6 +157,122 @@ const ProfileScreen = ({ navigation }) => {
           </TouchableOpacity>
         )}
       />
+
+      <Text style={{ alignSelf: "left", fontWeight: "bold" }}>
+        NAME
+      </Text>
+      <View style={styles.action}>
+        <FontAwesome name="user-o" color={colors.text} size={20} />
+        <TextInput
+          value={firstName + " " + lastName}
+          onChangeText={updateName}
+          placeholderTextColor="#666666"
+          autoCorrect={false}
+          style={[
+            styles.textInput,
+            {
+              color: colors.text,
+            },
+          ]}
+        />
+      </View>
+
+      <Text style={{ alignSelf: "left", fontWeight: "bold" }}>
+        ABOUT ME
+      </Text>
+      <View style={styles.action}>
+        <Feather name="info" color={colors.text} size={20} />
+        <TextInput
+          value={bio}
+          onChangeText={setBio}
+          placeholderTextColor="#666666"
+          autoCorrect={false}
+          style={[
+            styles.textInput,
+            {
+              color: colors.text,
+            },
+          ]}
+        />
+      </View>
+
+      <Text style={{ alignSelf: "left", fontWeight: "bold" }}>
+        PHONE NUMBER
+      </Text>
+      <View style={styles.action}>
+        <Feather name="phone" color={colors.text} size={20} />
+        <TextInput
+          value={phone}
+          onChangeText={setPhone}
+          placeholderTextColor="#666666"
+          keyboardType="number-pad"
+          autoCorrect={false}
+          style={[
+            styles.textInput,
+            {
+              color: colors.text,
+            },
+          ]}
+        />
+      </View>
+
+      <Text style={{ alignSelf: "left", fontWeight: "bold" }}>
+        SCHOOL
+      </Text>     
+      <View style={styles.action}>
+        <Icon name="school" color={colors.text} size={20} />
+        <TextInput
+          value={email}
+          onChangeText={setEmail}
+          placeholderTextColor="#666666"
+          keyboardType="email-address"
+          autoCorrect={false}
+          style={[
+            styles.textInput,
+            {
+              color: colors.text,
+            },
+          ]}
+        />
+      </View>
+
+      <Text style={{ alignSelf: "left", fontWeight: "bold" }}>
+        JOB TITLE
+      </Text>  
+      <View style={styles.action}>
+        <Icon name="shoe-formal" color={colors.text} size={20} />
+        <TextInput
+          value={country}
+          onChangeText={setCountry}
+          placeholderTextColor="#666666"
+          autoCorrect={false}
+          style={[
+            styles.textInput,
+            {
+              color: colors.text,
+            },
+          ]}
+        />
+      </View>
+
+      <Text style={{ alignSelf: "left", fontWeight: "bold" }}>
+        City
+      </Text>  
+      <View style={styles.action}>
+        <Icon name="map-marker-outline" color={colors.text} size={20} />
+        <TextInput
+          value={city}
+          onChangeText={setCity}
+          placeholderTextColor="#666666"
+          autoCorrect={false}
+          style={[
+            styles.textInput,
+            {
+              color: colors.text,
+            },
+          ]}
+        />
+      </View>
 
       <TouchableOpacity
         style={styles.commandButton}
@@ -263,7 +295,7 @@ const styles = StyleSheet.create({
   commandButton: {
     padding: 15,
     borderRadius: 10,
-    backgroundColor: "blue",
+    backgroundColor: "#f5a721",
     alignItems: "center",
     marginTop: 10,
   },
@@ -293,6 +325,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     color: "black",
-    backgroundColor: "white",
+    backgroundColor: "#ECECEC",
+    borderRadius: 3
   },
 });

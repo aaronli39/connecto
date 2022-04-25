@@ -9,6 +9,7 @@ import EventSearch from "./views/EventSearch";
 import ProfileScreen from "./views/ProfileScreen";
 import Swipe from "./views/Swipe";
 import Events from "./views/Events";
+import Messages from "./views/Messages";
 import { View } from "react-native";
 
 // constant names
@@ -16,6 +17,7 @@ const homeName = "Home";
 const profileName = "Profile";
 const swipeName = "Swipe";
 const eventsName = "Events";
+const messagesName = "Messages";
 
 // the navigators
 const Tab = createBottomTabNavigator();
@@ -33,7 +35,7 @@ export default function MainContainer() {
 			{/* tabs to navigate */}
 			<Tab.Navigator
 				style={{
-					backgroundColor: "#071740",
+					backgroundColor: "#007ae6",
 					position: "sticky",
 					fixed: "bottom",
 				}}
@@ -47,9 +49,11 @@ export default function MainContainer() {
 						} else if (routeName === profileName) {
 							iconName = focused ? "person" : "person-outline";
 						} else if (routeName === swipeName) {
-							iconName = focused ? "person" : "person-outline";
+							iconName = focused ? "caret-forward-circle" : "caret-forward-circle-outline";
 						} else if (routeName === eventsName) {
 							iconName = focused ? "calendar" : "calendar-outline";
+						} else if (routeName === messagesName) {
+							iconName = focused ? "chatbox-ellipses" : "chatbox-ellipses-outline";
 						}
 
 						return <Ionicons name={iconName} size={size} color={color} />;
@@ -75,6 +79,11 @@ export default function MainContainer() {
 					options={{ headerShown: false }}
 					name={swipeName}
 					component={Swipe}
+				/>
+				<Tab.Screen
+					options={{ headerShown: false }}
+					name={messagesName}
+					component={Messages}
 				/>
 			</Tab.Navigator>
 		</>
