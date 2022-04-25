@@ -129,7 +129,7 @@ const ProfileScreen = ({ navigation }) => {
       }}
     >
       <UploadImage style={{ alignSelf: "center"}} />
-      <Text style={{ alignSelf: "center", fontSize: 15, marginRight: "35%", marginBottom: 40, }}>
+      <Text style={{ fontSize: 15, marginRight: "35%", marginBottom: 40, }}>
         <Text>{firstName}, </Text>
         <Text style={{fontWeight: "bold"}}>26</Text>
       </Text>
@@ -158,7 +158,7 @@ const ProfileScreen = ({ navigation }) => {
         )}
       />
 
-      <Text style={{ alignSelf: "left", fontWeight: "bold" }}>
+      <Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
         NAME
       </Text>
       <View style={styles.action}>
@@ -177,7 +177,7 @@ const ProfileScreen = ({ navigation }) => {
         />
       </View>
 
-      <Text style={{ alignSelf: "left", fontWeight: "bold" }}>
+      <Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
         ABOUT ME
       </Text>
       <View style={styles.action}>
@@ -196,7 +196,7 @@ const ProfileScreen = ({ navigation }) => {
         />
       </View>
 
-      <Text style={{ alignSelf: "left", fontWeight: "bold" }}>
+      <Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
         PHONE NUMBER
       </Text>
       <View style={styles.action}>
@@ -216,7 +216,7 @@ const ProfileScreen = ({ navigation }) => {
         />
       </View>
 
-      <Text style={{ alignSelf: "left", fontWeight: "bold" }}>
+      <Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
         SCHOOL
       </Text>     
       <View style={styles.action}>
@@ -236,7 +236,7 @@ const ProfileScreen = ({ navigation }) => {
         />
       </View>
 
-      <Text style={{ alignSelf: "left", fontWeight: "bold" }}>
+      <Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
         JOB TITLE
       </Text>  
       <View style={styles.action}>
@@ -255,7 +255,7 @@ const ProfileScreen = ({ navigation }) => {
         />
       </View>
 
-      <Text style={{ alignSelf: "left", fontWeight: "bold" }}>
+      <Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
         City
       </Text>  
       <View style={styles.action}>
