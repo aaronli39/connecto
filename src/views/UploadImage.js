@@ -87,7 +87,7 @@ const imageUploaderStyles = StyleSheet.create({
     position: "relative",
     borderRadius: 25,
     overflow: "hidden",
-    marginTop: 50,
+    marginTop: 0,
     marginBottom: 7,
   },
   uploadBtnContainer: {

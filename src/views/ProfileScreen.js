@@ -82,6 +82,14 @@ const ProfileScreen = ({ navigation }) => {
   ];
   const { colors } = useTheme();
 
+  const updateName = (newText) => {
+    console.log(newText);
+    const words = newText.split(" ");
+    setFirstName(words[0]);
+    if (words.length > 1)
+      setLastName(words[1]);
+  }
+
   const sumbitProfile = async () => {
     console.log(
       "Submit",
@@ -157,7 +165,7 @@ const ProfileScreen = ({ navigation }) => {
         <FontAwesome name="user-o" color={colors.text} size={20} />
         <TextInput
           value={firstName + " " + lastName}
-          onChangeText={setFirstName}
+          onChangeText={updateName}
           placeholderTextColor="#666666"
           autoCorrect={false}
           style={[
@@ -212,7 +220,7 @@ const ProfileScreen = ({ navigation }) => {
         SCHOOL
       </Text>     
       <View style={styles.action}>
-        <FontAwesome name="envelope-o" color={colors.text} size={20} />
+        <Icon name="school" color={colors.text} size={20} />
         <TextInput
           value={email}
           onChangeText={setEmail}
@@ -229,10 +237,10 @@ const ProfileScreen = ({ navigation }) => {
       </View>
 
       <Text style={{ alignSelf: "left", fontWeight: "bold" }}>
-        SCHOOL
+        JOB TITLE
       </Text>  
       <View style={styles.action}>
-        <FontAwesome name="globe" color={colors.text} size={20} />
+        <Icon name="shoe-formal" color={colors.text} size={20} />
         <TextInput
           value={country}
           onChangeText={setCountry}
@@ -248,7 +256,7 @@ const ProfileScreen = ({ navigation }) => {
       </View>
 
       <Text style={{ alignSelf: "left", fontWeight: "bold" }}>
-        SCHOOL
+        City
       </Text>  
       <View style={styles.action}>
         <Icon name="map-marker-outline" color={colors.text} size={20} />
@@ -287,7 +295,7 @@ const styles = StyleSheet.create({
   commandButton: {
     padding: 15,
     borderRadius: 10,
-    backgroundColor: "blue",
+    backgroundColor: "#f5a721",
     alignItems: "center",
     marginTop: 10,
   },

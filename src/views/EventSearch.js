@@ -8,6 +8,7 @@ import {
 	Keyboard,
 	TouchableWithoutFeedback,
 	View,
+	TouchableOpacity,
 } from "react-native";
 import { Button } from "react-native-paper";
 import { CONSTANTS } from "../constants/DataConstants";
@@ -73,13 +74,12 @@ const EventSearch = ({ navigation }) => {
 					cancelText=""
 					onChangeText={(text) => setSearchInput(text)}
 				/>
-				<Button
-					mode="outlined"
-					style={styles.searchButton}
+				<TouchableOpacity
+					style={styles.commandButton}
 					onPress={fetchSearchResults}
 				>
-					Search
-				</Button>
+					<Text style={styles.panelButtonTitle}>Search</Text>
+				</TouchableOpacity>
 
 				{/* display the event cards */}
 				<View style={styles.eventListContainer}>
@@ -110,11 +110,6 @@ const styles = StyleSheet.create({
 		width: "100%",
 		marginTop: Constants.statusBarHeight,
 	},
-	searchButton: {
-		width: "50%",
-		alignSelf: "center",
-		marginTop: 20,
-	},
 	searchBox: {
 		marginTop: 40,
 		width: "90%",
@@ -130,4 +125,18 @@ const styles = StyleSheet.create({
 		flexWrap: "wrap",
 		paddingBottom: 48,
 	},
+	commandButton: {
+		padding: 15,
+		borderRadius: 10,
+		backgroundColor: "#007ae6",
+		alignItems: "center",
+		width: "50%",
+		alignSelf: "center",
+		marginTop: 20,
+	  },
+	panelButtonTitle: {
+		fontSize: 17,
+		fontWeight: "bold",
+		color: "white",
+	  },
 });
