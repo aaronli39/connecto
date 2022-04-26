@@ -95,7 +95,8 @@ const EventDetails = ({ route, navigation }) => {
 						<Button
 							style={styles.headerButtonAccept}
 							onPress={addToUserEvents}
-							mode="contained"
+							mode="outlined"
+							color="black"
 						>
 							<Text style={styles.headerButtonText}>Add Event</Text>
 						</Button>
@@ -103,7 +104,7 @@ const EventDetails = ({ route, navigation }) => {
 						<Button
 							style={styles.headerButtonRemove}
 							onPress={removeUserEvent}
-							mode="contained"
+							mode="outlined"
 							color="red"
 						>
 							<Text style={styles.headerButtonText}>Delete Event</Text>
@@ -156,17 +157,24 @@ const styles = StyleSheet.create({
 		alignItems: "flex-end",
 	},
 	headerButtonAccept: {
-		height: 32,
+		height: 36,
 		width: 120,
 		marginBottom: 8,
+		borderColor: "#007ae6",
+		borderRadius: 8,
+		borderWidth: 2,
 	},
 	headerButtonRemove: {
-		height: 32,
+		height: 36,
 		width: 140,
 		marginBottom: 8,
+		borderColor: "red",
+		borderRadius: 8,
+		borderWidth: 2,
 	},
 	headerButtonText: {
-		fontSize: 12,
+		fontSize: 11,
+		color: "black",
 	},
 	headerVenueText: {
 		fontSize: 16,

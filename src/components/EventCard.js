@@ -16,7 +16,7 @@ const EventCard = ({ event, onClickEvent }) => {
 					<Card.Cover
 						style={styles.cardCover}
 						source={{ uri: `${event?.thumbnail}` }}
-						resizeMode="stretch"
+						resizeMode="cover"
 					/>
 					<View style={styles.cardTextBackground}>
 						<Text style={styles.cardTextLeft}>{event?.start_date}</Text>

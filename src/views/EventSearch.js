@@ -74,12 +74,14 @@ const EventSearch = ({ navigation }) => {
 					cancelText=""
 					onChangeText={(text) => setSearchInput(text)}
 				/>
-				<TouchableOpacity
-					style={styles.commandButton}
+				<Button
+					mode="outlined"
+					color="black"
+					style={styles.searchButton}
 					onPress={fetchSearchResults}
 				>
-					<Text style={styles.panelButtonTitle}>Search</Text>
-				</TouchableOpacity>
+					Search
+				</Button>
 
 				{/* display the event cards */}
 				<View style={styles.eventListContainer}>
@@ -125,18 +127,12 @@ const styles = StyleSheet.create({
 		flexWrap: "wrap",
 		paddingBottom: 48,
 	},
-	commandButton: {
-		padding: 15,
-		borderRadius: 10,
-		backgroundColor: "#007ae6",
-		alignItems: "center",
+	searchButton: {
 		width: "50%",
 		alignSelf: "center",
 		marginTop: 20,
-	  },
-	panelButtonTitle: {
-		fontSize: 17,
-		fontWeight: "bold",
-		color: "white",
-	  },
+		borderColor: "#007ae6",
+		borderWidth: 2,
+		borderRadius: 12,
+	},
 });
