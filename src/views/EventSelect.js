@@ -4,6 +4,7 @@ import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import EventCard from "../components/EventCard";
 import { CONSTANTS } from "../constants/DataConstants";
 import axios from "axios";
+import { initializeApp } from "firebase/app";
 import {
 	getFirestore,
 	setDoc,
@@ -14,12 +15,34 @@ import {
 	onSnapshot,
 } from "firebase/firestore";
 import { app } from "./FirebaseInitialize";
-
 // Initialize Firebase
 const firestore = getFirestore(app);
 
-// this component contains the view for the current events tab
-const CurrentEvents = ({ nav }) => {
+// styling for the tab bar
+const renderTabBar = (props) => (
+	<TabBar
+		{...props}
+		inactiveColor="lightgray"
+		activeColor="black"
+		pressColor="gray"
+		indicatorStyle={{
+			backgroundColor: "#007ae6",
+			width: 140,
+			left: 30,
+		}}
+		style={{
+			backgroundColor: "white",
+			borderColor: "#007ae6",
+			borderWidth: 2,
+			borderRadius: 12,
+			marginLeft: 12,
+			marginRight: 12,
+		}}
+	/>
+);
+
+// this component contains the container logic for the Events tab view
+const EventSelect = ({ nav }) => {
 	const [eventsList, setEventsList] = useState([]);
 
 	// on page load, fetch all user's events
@@ -54,8 +77,10 @@ const CurrentEvents = ({ nav }) => {
 	};
 
 	// navigate to specific event details page
-	const viewEventDetailsPage = (event) => {
-		nav.navigate("Event Details", { ...event, buttonStyle: "cancel" });
+	const navToSwipe = (event) => {
+		console.log("Selected Event");
+        console.log(event);
+        nav.navigate("Swipes", {...event});
 	};
 
 	return (
@@ -80,7 +105,7 @@ const CurrentEvents = ({ nav }) => {
 							<EventCard
 								event={ev}
 								key={idx}
-								onClickEvent={() => viewEventDetailsPage(ev)}
+								onClickEvent={() => navToSwipe(ev)}
 							/>
 						))
 					)}
@@ -90,7 +115,7 @@ const CurrentEvents = ({ nav }) => {
 	);
 };
 
-export default CurrentEvents;
+export default EventSelect;
 
 const styles = StyleSheet.create({
 	container: {

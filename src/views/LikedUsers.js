@@ -20,17 +20,17 @@ import { app } from "./FirebaseInitialize";
 const firestore = getFirestore(app);
 
 // this component contains the view for the current events tab
-const CurrentEvents = ({ nav }) => {
-	const [eventsList, setEventsList] = useState([]);
+const LikedUsers = ({ nav }) => {
+	const [userList, setUserList] = useState([]);
 
 	// on page load, fetch all user's events
 	useEffect(async () => {
-		fetchMyEventList();
+		fetchLikedList();
 
 		const unsub = onSnapshot(
 			doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz"),
 			(doc) => {
-				setEventsList(doc.data().likedUsers);
+				setUserList(doc.data().likedUsers);
 			},
 			(error) => console.log(error)
 		);
@@ -39,12 +39,12 @@ const CurrentEvents = ({ nav }) => {
 	}, []);
 
 	// fetch user John Doe's events
-	const fetchMyEventList = () => {
+	const fetchLikedList = () => {
 		const docRef = doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz");
 		getDoc(docRef)
 			.then((doc) => {
 				if (doc.exists) {
-					setEventsList(doc.data().likedUsers);
+					setUserList(doc.data().likedUsers);
 				} else {
 					console.log("No such document");
 				}
@@ -52,11 +52,6 @@ const CurrentEvents = ({ nav }) => {
 			.catch((error) => {
 				console.log(error);
 			});
-	};
-
-	// navigate to specific event details page
-	const viewEventDetailsPage = (event) => {
-		nav.navigate("Event Details", { ...event, buttonStyle: "cancel" });
 	};
 
 	return (
@@ -70,16 +65,16 @@ const CurrentEvents = ({ nav }) => {
 				{/* display the event cards */}
 				<View style={styles.eventListContainer}>
 					{/* if null, show message, otherwise render cards*/}
-					{eventsList?.length === 0 ? (
+					{userList?.length === 0 ? (
 						<View style={{ marginTop: 100 }}>
 							<Text style={{ textAlign: "center" }}>
-								You have no events! Go add some from the home page!
+								You have no liked Users!
 							</Text>
 						</View>
 					) : (
 						<View style={{ marginTop: 100 }}>
-						{eventsList?.map((ev, idx) => (
-							<Text>{ev}</Text>
+						{userList?.map((ev, idx) => (
+							<Text>{ev.name}</Text>
 						))
                         }
 						</View>
@@ -90,7 +85,7 @@ const CurrentEvents = ({ nav }) => {
 	);
 };
 
-export default CurrentEvents;
+export default LikedUsers;
 
 const styles = StyleSheet.create({
 	container: {
