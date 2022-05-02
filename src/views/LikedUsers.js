@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Constants from "expo-constants";
-import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text, View, Image } from "react-native";
 import EventCard from "../components/EventCard";
 import { CONSTANTS } from "../constants/DataConstants";
 import axios from "axios";
@@ -74,9 +74,12 @@ const LikedUsers = ({ nav }) => {
 					) : (
 						<View style={{ marginTop: 100 }}>
 						{userList?.map((ev, idx) => (
-							<Text>{ev.name}</Text>
+							<View>
+								<Text>{ev.name}</Text>
+								<Image source = {{uri: ev.profileImage}} style={styles.photo}/>
+							</View>
 						))
-                        }
+						}
 						</View>
 					)}
 				</View>
@@ -92,6 +95,11 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		padding: "4%",
 	},
+	photo: {
+        height:100,
+        resizeMode: 'cover',
+        borderRadius: 20,
+    },
 	welcomeMessageText: {
 		fontWeight: "bold",
 		fontSize: 24,

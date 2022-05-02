@@ -66,12 +66,11 @@ const Swipe = ({route}) => {
 	function handleLike() {
 		console.log("liked user")
 		const user = users[currentIndex].name.first + " " + users[currentIndex].name.last;
-		const to_add = {name: user, id: users[currentIndex].login.uuid};
 		const match = {name: user, id: users[currentIndex].login.uuid, profileImage: users[currentIndex].picture.thumbnail};
 		console.log(user);
 		const docRef = doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz");
 		updateDoc(docRef, {
-			likedUsers: arrayUnion(to_add),
+			likedUsers: arrayUnion(match),
 		});
 		if(matcher.includes(users[currentIndex].login.uuid)){
 			updateDoc(docRef, {
