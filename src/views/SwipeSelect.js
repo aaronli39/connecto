@@ -8,8 +8,8 @@ import {
 	Image,
 } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-import LikedUsers from "./LikedUsers";
-import MatchedUsers from "./MatchedUsers";
+import EventSelect from "./EventSelect";
+import PastEvents from "./PastEvents";
 import { doc, getDoc, getFirestore, onSnapshot } from "firebase/firestore";
 import { app } from "./FirebaseInitialize";
 
@@ -40,23 +40,23 @@ const renderTabBar = (props) => (
 );
 
 // this component contains the container logic for the Events tab view
-const Messages = ({ navigation }) => {
+const SwipeSelect = ({ navigation }) => {
 	const layout = useWindowDimensions();
 	const [index, setIndex] = React.useState(0);
 	const [firstname, setFirstname] = React.useState(" ");
 	const [lastname, setLastname] = React.useState(" ");
 	const [profilePicture, setProfilePicture] = React.useState(" ");
 	const [routes] = React.useState([
-		{ key: "first", title: "Liked Users" },
-		{ key: "second", title: "Matched Users" },
+		{ key: "first", title: "Current Events" },
+		{ key: "second", title: "Past Events" },
 	]);
 
 	// contains the routes and the components
 	// associated with the specific route
 	// also pass navigation prop
 	const renderScene = SceneMap({
-		first: () => <LikedUsers nav={navigation} />,
-		second: MatchedUsers,
+		first: () => <EventSelect nav={navigation} />,
+		second: PastEvents,
 	});
 
 	useEffect(() => {
@@ -102,7 +102,7 @@ const Messages = ({ navigation }) => {
 					style={styles.profilePictureText}
 				>{`${firstname} ${lastname}`}</Text>
 			</View>
-			<Text style={styles.welcomeMessageText}>Your Connections</Text>
+			<Text style={styles.welcomeMessageText}>Select Event to Start Connecting!</Text>
 			<TabView
 				renderTabBar={renderTabBar}
 				navigationState={{ index, routes }}
@@ -114,7 +114,7 @@ const Messages = ({ navigation }) => {
 	);
 };
 
-export default Messages;
+export default SwipeSelect;
 
 const styles = StyleSheet.create({
 	container: {

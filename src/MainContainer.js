@@ -11,6 +11,7 @@ import Swipe from "./views/Swipe";
 import Events from "./views/Events";
 import Messages from "./views/Messages";
 import { View } from "react-native";
+import SwipeSelect from "./views/SwipeSelect";
 
 // constant names
 const homeName = "Home";
@@ -78,7 +79,7 @@ export default function MainContainer() {
 				<Tab.Screen
 					options={{ headerShown: false }}
 					name={swipeName}
-					component={Swipe}
+					component={SwipeSelect}
 				/>
 				<Tab.Screen
 					options={{ headerShown: false }}

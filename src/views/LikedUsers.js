@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Constants from "expo-constants";
-import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text, View, Image } from "react-native";
 import EventCard from "../components/EventCard";
 import { CONSTANTS } from "../constants/DataConstants";
 import axios from "axios";
@@ -20,17 +20,17 @@ import { app } from "./FirebaseInitialize";
 const firestore = getFirestore(app);
 
 // this component contains the view for the current events tab
-const CurrentEvents = ({ nav }) => {
-	const [eventsList, setEventsList] = useState([]);
+const LikedUsers = ({ nav }) => {
+	const [userList, setUserList] = useState([]);
 
 	// on page load, fetch all user's events
 	useEffect(async () => {
-		fetchMyEventList();
+		fetchLikedList();
 
 		const unsub = onSnapshot(
 			doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz"),
 			(doc) => {
-				setEventsList(doc.data().matchedUsers);
+				setUserList(doc.data().likedUsers);
 			},
 			(error) => console.log(error)
 		);
@@ -39,12 +39,12 @@ const CurrentEvents = ({ nav }) => {
 	}, []);
 
 	// fetch user John Doe's events
-	const fetchMyEventList = () => {
+	const fetchLikedList = () => {
 		const docRef = doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz");
 		getDoc(docRef)
 			.then((doc) => {
 				if (doc.exists) {
-					setEventsList(doc.data().matchedUsers);
+					setUserList(doc.data().likedUsers);
 				} else {
 					console.log("No such document");
 				}
@@ -52,11 +52,6 @@ const CurrentEvents = ({ nav }) => {
 			.catch((error) => {
 				console.log(error);
 			});
-	};
-
-	// navigate to specific event details page
-	const viewEventDetailsPage = (event) => {
-		nav.navigate("Event Details", { ...event, buttonStyle: "cancel" });
 	};
 
 	return (
@@ -70,24 +65,22 @@ const CurrentEvents = ({ nav }) => {
 				{/* display the event cards */}
 				<View style={styles.eventListContainer}>
 					{/* if null, show message, otherwise render cards*/}
-					{eventsList?.length === 0 ? (
+					{userList?.length === 0 ? (
 						<View style={{ marginTop: 100 }}>
 							<Text style={{ textAlign: "center" }}>
-								You have no events! Go add some from the home page!
+								You have no liked Users!
 							</Text>
 						</View>
 					) : (
-						eventsList.map((ev, idx) => (
-							// <View>
-							// 	<Text>{ev.name}</Text>
-							// 	<Text>{ev.profileImage}</Text>
-							// </View>
-							<EventCard
-								event={{title : ev.name, thumbnail : ev.profileImage}}
-								key={idx}
-								onClickEvent={() => {}}
-							/>
+						<View style={{ marginTop: 100 }}>
+						{userList?.map((ev, idx) => (
+							<View>
+								<Text>{ev.name}</Text>
+								<Image source = {{uri: ev.profileImage}} style={styles.photo}/>
+							</View>
 						))
+						}
+						</View>
 					)}
 				</View>
 			</ScrollView>
@@ -95,13 +88,18 @@ const CurrentEvents = ({ nav }) => {
 	);
 };
 
-export default CurrentEvents;
+export default LikedUsers;
 
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: "white",
 		padding: "4%",
 	},
+	photo: {
+        height:100,
+        resizeMode: 'cover',
+        borderRadius: 20,
+    },
 	welcomeMessageText: {
 		fontWeight: "bold",
 		fontSize: 24,

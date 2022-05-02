@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MainContainer from "./src/MainContainer";
 import EventDetails from "./src/views/EventDetails";
+import Swipe from "./src/views/Swipe";
 const theme = {
 	...DefaultTheme,
 	colors: {
@@ -23,6 +24,7 @@ export default function App() {
 						name={"Home1"}
 						component={MainContainer}
 					/>
+					<Stack.Screen name={"Swipes"} component={Swipe} />
 					<Stack.Screen name={"Event Details"} component={EventDetails} />
 				</Stack.Navigator>
 			</NavigationContainer>
