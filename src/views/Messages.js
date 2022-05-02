@@ -97,7 +97,7 @@ const Messages = ({ navigation }) => {
 					style={styles.profilePictureText}
 				>{`${firstname} ${lastname}`}</Text>
 			</View>
-			<Text style={styles.welcomeMessageText}>Your Events</Text>
+			<Text style={styles.welcomeMessageText}>Your Connections</Text>
 			<TabView
 				renderTabBar={renderTabBar}
 				navigationState={{ index, routes }}
