@@ -30,7 +30,7 @@ const CurrentEvents = ({ nav }) => {
 		const unsub = onSnapshot(
 			doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz"),
 			(doc) => {
-				setEventsList(doc.data().likedUsers);
+				setEventsList(doc.data().matchedUsers);
 			},
 			(error) => console.log(error)
 		);
@@ -44,7 +44,7 @@ const CurrentEvents = ({ nav }) => {
 		getDoc(docRef)
 			.then((doc) => {
 				if (doc.exists) {
-					setEventsList(doc.data().likedUsers);
+					setEventsList(doc.data().matchedUsers);
 				} else {
 					console.log("No such document");
 				}
@@ -77,12 +77,17 @@ const CurrentEvents = ({ nav }) => {
 							</Text>
 						</View>
 					) : (
-						<View style={{ marginTop: 100 }}>
-						{eventsList?.map((ev, idx) => (
-							<Text>{ev}</Text>
+						eventsList.map((ev, idx) => (
+							// <View>
+							// 	<Text>{ev.name}</Text>
+							// 	<Text>{ev.profileImage}</Text>
+							// </View>
+							<EventCard
+								event={{title : ev.name, thumbnail : ev.profileImage}}
+								key={idx}
+								onClickEvent={() => {}}
+							/>
 						))
-                        }
-						</View>
 					)}
 				</View>
 			</ScrollView>

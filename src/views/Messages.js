@@ -22,14 +22,19 @@ const renderTabBar = (props) => (
 		{...props}
 		inactiveColor="lightgray"
 		activeColor="black"
-		tabStyle={{ borderRightWidth: 1, borderLeftWidth: 1 }}
 		pressColor="gray"
-		indicatorStyle={{ backgroundColor: "black" }}
+		indicatorStyle={{
+			backgroundColor: "#007ae6",
+			width: 140,
+			left: 30,
+		}}
 		style={{
 			backgroundColor: "white",
-			borderColor: "black",
-			borderTopWidth: 2,
-			borderBottomWidth: 1,
+			borderColor: "#007ae6",
+			borderWidth: 2,
+			borderRadius: 12,
+			marginLeft: 12,
+			marginRight: 12,
 		}}
 	/>
 );
