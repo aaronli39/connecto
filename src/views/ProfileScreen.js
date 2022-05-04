@@ -162,7 +162,6 @@ const ProfileScreen = ({ navigation }) => {
 				)}
 			/>
 
-<<<<<<< HEAD
       <Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
         NAME
       </Text>
@@ -181,24 +180,6 @@ const ProfileScreen = ({ navigation }) => {
           ]}
         />
       </View>
-=======
-			<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>NAME</Text>
-			<View style={styles.action}>
-				<FontAwesome name="user-o" color={colors.text} size={20} />
-				<TextInput
-					value={firstName + " " + lastName}
-					onChangeText={updateName}
-					placeholderTextColor="#666666"
-					autoCorrect={false}
-					style={[
-						styles.textInput,
-						{
-							color: colors.text,
-						},
-					]}
-				/>
-			</View>
->>>>>>> 80c585f4cb555d9a08732fd8b1c4e0aca2faf84f
 
 			<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
 				ABOUT ME
