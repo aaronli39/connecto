@@ -4,6 +4,7 @@ import Swiper from "react-native-swiper";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native-paper";
 import BottomTabImage from "../assets/bottomTabView.jpg";
+import Whale from "../assets/whale.jpg";
 
 const Onboarding = ({ navigation }) => {
 	return (
@@ -144,6 +145,11 @@ const Onboarding = ({ navigation }) => {
 				>
 					Onwards!
 				</Button>
+				<Image
+					source={Whale}
+					style={{ width: "100%", height: 240 }}
+					resizeMode="contain"
+				/>
 			</ScrollView>
 		</Swiper>
 	);
@@ -154,12 +160,16 @@ export default Onboarding;
 const styles = StyleSheet.create({
 	wrapper: {
 		marginTop: Constants.statusBarHeight,
+		backgroundColor: "white",
+		height: "100%",
 	},
 	slide1: {
 		display: "flex",
 		flexDirection: "row",
 		justifyContent: "center",
 		flexWrap: "wrap",
+		backgroundColor: "white",
+		height: "100%",
 	},
 	slideHeader: {
 		color: "black",
