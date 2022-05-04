@@ -66,7 +66,15 @@ const EventSelect = ({ nav }) => {
 		getDoc(docRef)
 			.then((doc) => {
 				if (doc.exists) {
-					setEventsList(doc.data().myEvents);
+					let allEvents = doc.data().myEvents;
+					let currentEvents = [];
+					allEvents.forEach((event) => {
+						let today = new Date().getTime();
+						let eventTime = new Date(event?.start_date + " 2022").getTime();
+						if (eventTime < today) currentEvents.push(event);
+					});
+					setEventsList(currentEvents);
+
 				} else {
 					console.log("No such document");
 				}
