@@ -32,6 +32,7 @@ const Swipe = ({ route }) => {
 	const match_image = Image.resolveAssetSource(connectOmatch).uri;
 	//list of users and we can manipulate the stack of profiles using users array and the current index
 	const [users, setUsers] = useState([]);
+	const [usersReal, setUsersReal] = useState([]);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [matcher, setMatcher] = useState([]);
 	const swipeHandleRef = useRef(null);
@@ -66,26 +67,44 @@ const Swipe = ({ route }) => {
 			});
 	};
 
+	const fetchFounders = () => {
+		const docRef = doc(firestore, "eventAttendees", "y6a3JTOfhBgmYYVXxyZT");
+		getDoc(docRef)
+			.then((doc) => {
+				if(doc.exists) {
+					setUsersReal(doc.data().userList);
+				} else {
+					console.log("No such document");
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			})
+	};
+
 	useEffect(() => {
 		fetchUsers();
 		fetchMatcher();
+		fetchFounders();
 	}, []);
 	//Functions that handle operations after liking or disliking someone
 	function handleLike() {
 		console.log("liked user");
-		const user =
-			users[currentIndex].name.first + " " + users[currentIndex].name.last;
+		const user = usersReal[currentIndex].name
 		const match = {
 			name: user,
-			id: users[currentIndex].login.uuid,
-			profileImage: users[currentIndex].picture.large,
+			phone: usersReal[currentIndex].phone,
+			profileImage: usersReal[currentIndex].profileImage,
+			bio: usersReal[currentIndex].bio,
+			age: usersReal[currentIndex].age,
+			location: usersReal[currentIndex].location,
 		};
-		console.log(user);
+		console.log(match);
 		const docRef = doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz");
 		updateDoc(docRef, {
 			likedUsers: arrayUnion(match),
 		});
-		if (matcher.includes(users[currentIndex].login.uuid)) {
+		if (matcher.includes(usersReal[currentIndex].phone)) {
 			updateDoc(docRef, {
 				matchedUsers: arrayUnion(match),
 			});
@@ -145,15 +164,15 @@ const Swipe = ({ route }) => {
 			</Modal>
 
 			<View style={styles.swipes}>
-				{users.length > 1 &&
-					users.map(
+				{usersReal.length > 1 &&
+					usersReal.map(
 						(u, i) =>
 							currentIndex === i && (
 								<SwipeHandle
 									ref={swipeHandleRef}
 									key={i}
 									currentIndex={currentIndex}
-									users={users}
+									users={usersReal}
 									handleLike={handleLike}
 									handleDislike={handleDisLike}
 								/>

@@ -135,7 +135,7 @@ const ProfileScreen = ({ navigation }) => {
     >
       <UploadImage style={{ alignSelf: "center"}} />
       <Text style={{ fontSize: 15, marginRight: "35%", marginBottom: 40, }}>
-        <Text>{firstName} {lastName}, </Text>
+        <Text>{firstName}, </Text>
         <Text style={{fontWeight: "bold"}}>26</Text>
       </Text>
 
@@ -167,8 +167,8 @@ const ProfileScreen = ({ navigation }) => {
 			<View style={styles.action}>
 				<FontAwesome name="user-o" color={colors.text} size={20} />
 				<TextInput
-					value={firstName + " " + lastName}
-					onChangeText={updateName}
+					value={firstName}
+					onChangeText={setFirstName}
 					placeholderTextColor="#666666"
 					autoCorrect={false}
 					style={[
