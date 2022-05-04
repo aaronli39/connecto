@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Constants from "expo-constants";
 import { FlatList, ScrollView, StyleSheet, Text, View, Image } from "react-native";
 import EventCard from "../components/EventCard";
+import UserCard from "../components/UserCard";
 import { CONSTANTS } from "../constants/DataConstants";
 import axios from "axios";
 import { initializeApp } from "firebase/app";
@@ -72,15 +73,11 @@ const LikedUsers = ({ nav }) => {
 							</Text>
 						</View>
 					) : (
-						<View style={{ marginTop: 100 }}>
-						{userList?.map((ev, idx) => (
+						userList?.map((ev, idx) => (
 							<View>
-								<Text>{ev.name}</Text>
-								<Image source = {{uri: ev.profileImage}} style={styles.photo}/>
+								<UserCard user={ev}></UserCard>
 							</View>
 						))
-						}
-						</View>
 					)}
 				</View>
 			</ScrollView>
@@ -95,11 +92,6 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		padding: "4%",
 	},
-	photo: {
-        height:100,
-        resizeMode: 'cover',
-        borderRadius: 20,
-    },
 	welcomeMessageText: {
 		fontWeight: "bold",
 		fontSize: 24,
