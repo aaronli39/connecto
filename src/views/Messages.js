@@ -8,7 +8,6 @@ import {
 	Image,
 } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-import LikedUsers from "./LikedUsers";
 import MatchedUsers from "./MatchedUsers";
 import { doc, getDoc, getFirestore, onSnapshot } from "firebase/firestore";
 import { app } from "./FirebaseInitialize";
@@ -46,18 +45,6 @@ const Messages = ({ navigation }) => {
 	const [firstname, setFirstname] = React.useState(" ");
 	const [lastname, setLastname] = React.useState(" ");
 	const [profilePicture, setProfilePicture] = React.useState(" ");
-	const [routes] = React.useState([
-		{ key: "first", title: "Liked Users" },
-		{ key: "second", title: "Matched Users" },
-	]);
-
-	// contains the routes and the components
-	// associated with the specific route
-	// also pass navigation prop
-	const renderScene = SceneMap({
-		first: () => <LikedUsers nav={navigation} />,
-		second: MatchedUsers,
-	});
 
 	useEffect(() => {
 		// fetch user profile data for events page
@@ -102,14 +89,8 @@ const Messages = ({ navigation }) => {
 					style={styles.profilePictureText}
 				>{`${firstname} ${lastname}`}</Text>
 			</View>
-			<Text style={styles.welcomeMessageText}>Your Connections</Text>
-			<TabView
-				renderTabBar={renderTabBar}
-				navigationState={{ index, routes }}
-				renderScene={renderScene}
-				onIndexChange={setIndex}
-				initialLayout={{ width: layout.width }}
-			/>
+			<Text style={styles.welcomeMessageText}>Your Matches</Text>
+			<MatchedUsers />
 		</View>
 	);
 };
