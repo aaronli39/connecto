@@ -70,4 +70,9 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		fontSize: 16,
 	},
+	cardTextRight: {
+		alignSelf: "center",
+		marginLeft: 8,
+		flex: 1,
+	},
 });
