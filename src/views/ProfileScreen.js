@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Card } from "react-native-paper";
 import {
   View,
   ScrollView,
@@ -130,7 +131,7 @@ const ProfileScreen = ({ navigation }) => {
     >
       <UploadImage style={{ alignSelf: "center"}} />
       <Text style={{ fontSize: 15, marginRight: "35%", marginBottom: 40, }}>
-        <Text>{firstName}, </Text>
+        <Text>{firstName} {lastName}, </Text>
         <Text style={{fontWeight: "bold"}}>26</Text>
       </Text>
 
