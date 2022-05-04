@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Constants from "expo-constants";
-import { FlatList, ScrollView, StyleSheet, Text, View, Image } from "react-native";
+import {
+	FlatList,
+	ScrollView,
+	StyleSheet,
+	Text,
+	View,
+	Image,
+} from "react-native";
 import EventCard from "../components/EventCard";
 import UserCard from "../components/UserCard";
 import { CONSTANTS } from "../constants/DataConstants";
@@ -67,15 +74,11 @@ const MatchedUsers = () => {
 					{/* if null, show message, otherwise render cards*/}
 					{userList?.length === 0 ? (
 						<View style={{ marginTop: 100 }}>
-							<Text style={{ textAlign: "center" }}>
-								You have no Matches!
-							</Text>
+							<Text style={{ textAlign: "center" }}>You have no Matches!</Text>
 						</View>
 					) : (
 						userList?.map((ev, idx) => (
-							<View>
-								<UserCard user={ev}></UserCard>
-							</View>
+							<UserCard user={ev} key={idx}></UserCard>
 						))
 					)}
 				</View>
