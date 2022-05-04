@@ -19,27 +19,7 @@ import { app } from "./FirebaseInitialize";
 const firestore = getFirestore(app);
 
 // styling for the tab bar
-const renderTabBar = (props) => (
-	<TabBar
-		{...props}
-		inactiveColor="lightgray"
-		activeColor="black"
-		pressColor="gray"
-		indicatorStyle={{
-			backgroundColor: "#007ae6",
-			width: 140,
-			left: 30,
-		}}
-		style={{
-			backgroundColor: "white",
-			borderColor: "#007ae6",
-			borderWidth: 2,
-			borderRadius: 12,
-			marginLeft: 12,
-			marginRight: 12,
-		}}
-	/>
-);
+
 
 // this component contains the container logic for the Events tab view
 const EventSelect = ({ nav }) => {
