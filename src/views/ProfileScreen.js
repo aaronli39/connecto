@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Card } from "react-native-paper";
 import {
 	View,
 	ScrollView,
@@ -120,23 +121,23 @@ const ProfileScreen = ({ navigation }) => {
 		await updateDoc(docRef, docData);
 	};
 
-	return (
-		<ScrollView
-			style={styles.container}
-			contentContainerStyle={{
-				marginTop: 50,
-				paddingBottom: 60,
-				marginLeft: 10,
-				marginRight: 10,
-				justifyContent: "center",
-				alignItems: "center",
-			}}
-		>
-			<UploadImage style={{ alignSelf: "center" }} />
-			<Text style={{ fontSize: 15, marginRight: "35%", marginBottom: 40 }}>
-				<Text>{firstName}, </Text>
-				<Text style={{ fontWeight: "bold" }}>26</Text>
-			</Text>
+  return (
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={{
+        marginTop: 50,
+        paddingBottom: 60,
+        marginLeft: 10,
+        marginRight: 10,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <UploadImage style={{ alignSelf: "center"}} />
+      <Text style={{ fontSize: 15, marginRight: "35%", marginBottom: 40, }}>
+        <Text>{firstName}, </Text>
+        <Text style={{fontWeight: "bold"}}>26</Text>
+      </Text>
 
 			<FlatList
 				horizontal={true}
@@ -166,8 +167,8 @@ const ProfileScreen = ({ navigation }) => {
 			<View style={styles.action}>
 				<FontAwesome name="user-o" color={colors.text} size={20} />
 				<TextInput
-					value={firstName + " " + lastName}
-					onChangeText={updateName}
+					value={firstName}
+					onChangeText={setFirstName}
 					placeholderTextColor="#666666"
 					autoCorrect={false}
 					style={[
