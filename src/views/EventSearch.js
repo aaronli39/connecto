@@ -1,5 +1,5 @@
 import Constants from "expo-constants";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
 	StyleSheet,
@@ -19,6 +19,12 @@ import SearchBar from "react-native-platform-searchbar";
 const EventSearch = ({ navigation }) => {
 	const [searchInput, setSearchInput] = useState("");
 	const [eventList, setEventList] = useState([]);
+
+	useEffect(() => {
+		navigation.navigate("Onboarding");
+
+		return () => {};
+	}, []);
 
 	// do api call to fetch results
 	const fetchSearchResults = () => {

@@ -50,11 +50,15 @@ export default function MainContainer() {
 						} else if (routeName === profileName) {
 							iconName = focused ? "person" : "person-outline";
 						} else if (routeName === swipeName) {
-							iconName = focused ? "caret-forward-circle" : "caret-forward-circle-outline";
+							iconName = focused
+								? "caret-forward-circle"
+								: "caret-forward-circle-outline";
 						} else if (routeName === eventsName) {
 							iconName = focused ? "calendar" : "calendar-outline";
 						} else if (routeName === messagesName) {
-							iconName = focused ? "chatbox-ellipses" : "chatbox-ellipses-outline";
+							iconName = focused
+								? "chatbox-ellipses"
+								: "chatbox-ellipses-outline";
 						}
 
 						return <Ionicons name={iconName} size={size} color={color} />;
@@ -73,11 +77,6 @@ export default function MainContainer() {
 				/>
 				<Tab.Screen
 					options={{ headerShown: false }}
-					name={profileName}
-					component={ProfileScreen}
-				/>
-				<Tab.Screen
-					options={{ headerShown: false }}
 					name={swipeName}
 					component={SwipeSelect}
 				/>
@@ -85,6 +84,11 @@ export default function MainContainer() {
 					options={{ headerShown: false }}
 					name={messagesName}
 					component={Messages}
+				/>
+				<Tab.Screen
+					options={{ headerShown: false }}
+					name={profileName}
+					component={ProfileScreen}
 				/>
 			</Tab.Navigator>
 		</>
