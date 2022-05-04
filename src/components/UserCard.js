@@ -4,12 +4,11 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 
 // this component serves to contain an invidual event card
 const UserCard = ({ user, onClickEvent }) => {
+	console.log(user);
 	return (
 		<Pressable
 			style={styles.outerContainer}
-			onPress={() => {
-				onClickEvent(user);
-			}}
+			onPress={(e) => e.preventDefault()}
 		>
 			<Card style={styles.cardContainer}>
 				<Card.Content style={styles.cardContent}>
@@ -19,7 +18,8 @@ const UserCard = ({ user, onClickEvent }) => {
 						resizeMode="cover"
 					/>
 					<View style={styles.cardTextBackground}>
-                        <Text style={styles.cardTextRight}>{user.name}</Text>
+						<Text>{user.name}</Text>
+						{/* <Text>{user.Phone}</Text> */}
 					</View>
 				</Card.Content>
 			</Card>
@@ -58,11 +58,8 @@ const styles = StyleSheet.create({
 		zIndex: 2,
 		backgroundColor: "rgba(241, 236, 235, 0.8)",
 		padding: 8,
-		display: "flex",
-		flexDirection: "row",
-		justifyContent: "flex-start",
 		width: "100%",
-		height: 40,
+		height: 32,
 		position: "absolute",
 		bottom: 0,
 		overflow: "hidden",
