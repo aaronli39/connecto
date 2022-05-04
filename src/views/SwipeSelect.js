@@ -16,29 +16,6 @@ import { app } from "./FirebaseInitialize";
 // Initialize Firebase
 const firestore = getFirestore(app);
 
-// styling for the tab bar
-const renderTabBar = (props) => (
-	<TabBar
-		{...props}
-		inactiveColor="lightgray"
-		activeColor="black"
-		pressColor="gray"
-		indicatorStyle={{
-			backgroundColor: "#007ae6",
-			width: 140,
-			left: 30,
-		}}
-		style={{
-			backgroundColor: "white",
-			borderColor: "#007ae6",
-			borderWidth: 2,
-			borderRadius: 12,
-			marginLeft: 12,
-			marginRight: 12,
-		}}
-	/>
-);
-
 // this component contains the container logic for the Events tab view
 const SwipeSelect = ({ navigation }) => {
 	const layout = useWindowDimensions();
@@ -46,18 +23,6 @@ const SwipeSelect = ({ navigation }) => {
 	const [firstname, setFirstname] = React.useState(" ");
 	const [lastname, setLastname] = React.useState(" ");
 	const [profilePicture, setProfilePicture] = React.useState(" ");
-	const [routes] = React.useState([
-		{ key: "first", title: "Current Events" },
-		{ key: "second", title: "Past Events" },
-	]);
-
-	// contains the routes and the components
-	// associated with the specific route
-	// also pass navigation prop
-	const renderScene = SceneMap({
-		first: () => <EventSelect nav={navigation} />,
-		second: PastEvents,
-	});
 
 	useEffect(() => {
 		// fetch user profile data for events page
@@ -102,14 +67,10 @@ const SwipeSelect = ({ navigation }) => {
 					style={styles.profilePictureText}
 				>{`${firstname} ${lastname}`}</Text>
 			</View>
-			<Text style={styles.welcomeMessageText}>Select Event to Start Connecting!</Text>
-			<TabView
-				renderTabBar={renderTabBar}
-				navigationState={{ index, routes }}
-				renderScene={renderScene}
-				onIndexChange={setIndex}
-				initialLayout={{ width: layout.width }}
-			/>
+			<Text style={styles.welcomeMessageText}>
+				Select An Event to Start Matching!
+			</Text>
+			<EventSelect nav={navigation} />
 		</View>
 	);
 };
