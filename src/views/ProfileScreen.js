@@ -56,6 +56,7 @@ const ProfileScreen = ({ navigation }) => {
 					console.log("Document Data:", doc.data().FirstName);
 					let data = doc.data();
 					setName(data.FirstName + " " + data.LastName);
+					console.log("PROFILESCREEN:", data.FirstName + " " + data.LastName);
 					setFirstName(data.FirstName);
 					setLastName(data.LastName);
 					setBio(data.Biography);
@@ -121,23 +122,30 @@ const ProfileScreen = ({ navigation }) => {
 		await updateDoc(docRef, docData);
 	};
 
-  return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={{
-        marginTop: 50,
-        paddingBottom: 60,
-        marginLeft: 10,
-        marginRight: 10,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <UploadImage style={{ alignSelf: "center"}} />
-      <Text style={{ fontSize: 15, marginRight: "35%", marginBottom: 40, }}>
-        <Text>{firstName}, </Text>
-        <Text style={{fontWeight: "bold"}}>26</Text>
-      </Text>
+	return (
+		<ScrollView
+			style={styles.container}
+			contentContainerStyle={{
+				marginTop: 50,
+				paddingBottom: 60,
+				marginLeft: 10,
+				marginRight: 10,
+				justifyContent: "center",
+				alignItems: "center",
+			}}
+		>
+			<UploadImage style={{ alignSelf: "center" }} />
+			<View
+				style={{
+					display: "flex",
+					flexDirection: "row",
+					justifyContent: "center",
+					marginBottom: 24,
+					marginTop: 8,
+				}}
+			>
+				<Text style={{ fontSize: 24, fontWeight: "bold" }}>{name}</Text>
+			</View>
 
 			<FlatList
 				horizontal={true}
@@ -167,8 +175,8 @@ const ProfileScreen = ({ navigation }) => {
 			<View style={styles.action}>
 				<FontAwesome name="user-o" color={colors.text} size={20} />
 				<TextInput
-					value={firstName}
-					onChangeText={setFirstName}
+					value={firstName + " " + lastName}
+					onChangeText={name}
 					placeholderTextColor="#666666"
 					autoCorrect={false}
 					style={[
