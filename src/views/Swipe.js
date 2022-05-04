@@ -120,9 +120,13 @@ const Swipe = ({ route }) => {
 	}
 
 	function getNextUser() {
-		const nextIndex =
-			usersReal.length - 1 === currentIndex ? 0 : currentIndex + 1;
-		setCurrentIndex(nextIndex);
+		if(currentIndex == usersReal.length - 2){
+			setCurrentIndex(0);
+		}
+		else{
+			const nextIndex = currentIndex + 1;
+			setCurrentIndex(nextIndex);
+		}
 	}
 	//onPress functions
 	function handleLikePress() {
