@@ -38,39 +38,39 @@ const ProfileScreen = ({ navigation }) => {
 	// Initialize Firebase
 	const firestore = getFirestore(app);
 
-  const [name, setName] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [bio, setBio] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [country, setCountry] = useState("");
-  const [city, setCity] = useState("");
-  //Collection Ref
-  const docRef = doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz");
+	const [name, setName] = useState("");
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [bio, setBio] = useState("");
+	const [phone, setPhone] = useState("");
+	const [email, setEmail] = useState("");
+	const [country, setCountry] = useState("");
+	const [city, setCity] = useState("");
+	//Collection Ref
+	const docRef = doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz");
 
-  useEffect(() => {
-    getDoc(docRef)
-      .then((doc) => {
-        if (doc.exists) {
-          console.log("Document Data:", doc.data().FirstName);
-          let data = doc.data();
-          setName(data.FirstName + " " + data.LastName);
-          setFirstName(data.FirstName);
-          setLastName(data.LastName);
-          setBio(data.Biography);
-          setPhone(data.Phone);
-          setEmail(data.Email);
-          setCountry(data.Country);
-          setCity(data.City);
-        } else {
-          console.log("No such document");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+	useEffect(() => {
+		getDoc(docRef)
+			.then((doc) => {
+				if (doc.exists) {
+					console.log("Document Data:", doc.data().FirstName);
+					let data = doc.data();
+					setName(data.FirstName + " " + data.LastName);
+					setFirstName(data.FirstName);
+					setLastName(data.LastName);
+					setBio(data.Biography);
+					setPhone(data.Phone);
+					setEmail(data.Email);
+					setCountry(data.Country);
+					setCity(data.City);
+				} else {
+					console.log("No such document");
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
 
 	const { width } = Dimensions.get("window");
 	const SPACING = 10;
@@ -85,41 +85,41 @@ const ProfileScreen = ({ navigation }) => {
 	];
 	const { colors } = useTheme();
 
-  const sumbitProfile = async () => {
-    var words = name.split(" ");
-    var firstName1 = "";
-    var lastName1 = "";
-    if (words.length > 0) {
-      firstName1 = words[0];
-    }
-    if (words.length > 1) {
-      lastName1 = words[1];
-    }
+	const sumbitProfile = async () => {
+		var words = name.split(" ");
+		var firstName1 = "";
+		var lastName1 = "";
+		if (words.length > 0) {
+			firstName1 = words[0];
+		}
+		if (words.length > 1) {
+			lastName1 = words[1];
+		}
 
-    setFirstName(firstName1);
-    console.log(
-      "Submit",
-      firstName1,
-      lastName1,
-      bio,
-      phone,
-      email,
-      country,
-      city
-    );
+		setFirstName(firstName1);
+		console.log(
+			"Submit",
+			firstName1,
+			lastName1,
+			bio,
+			phone,
+			email,
+			country,
+			city
+		);
 
-    const docData = {
-      "FirstName": firstName1,
-      "LastName": lastName1,
-      "Biography": bio,
-      "Phone": phone,
-	  "Email": email,
-      "Country": country,
-      "City": city,
-    };
-    console.log(docData);
-    await updateDoc(docRef, docData);
-  };
+		const docData = {
+			FirstName: firstName1,
+			LastName: lastName1,
+			Biography: bio,
+			Phone: phone,
+			Email: email,
+			Country: country,
+			City: city,
+		};
+		console.log(docData);
+		await updateDoc(docRef, docData);
+	};
 
   return (
     <ScrollView
@@ -163,24 +163,22 @@ const ProfileScreen = ({ navigation }) => {
 				)}
 			/>
 
-      <Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
-        NAME
-      </Text>
-      <View style={styles.action}>
-        <FontAwesome name="user-o" color={colors.text} size={20} />
-        <TextInput
-          value={name}
-          onChangeText={setName}
-          placeholderTextColor="#666666"
-          autoCorrect={false}
-          style={[
-            styles.textInput,
-            {
-              color: colors.text,
-            },
-          ]}
-        />
-      </View>
+			<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>NAME</Text>
+			<View style={styles.action}>
+				<FontAwesome name="user-o" color={colors.text} size={20} />
+				<TextInput
+					value={firstName + " " + lastName}
+					onChangeText={updateName}
+					placeholderTextColor="#666666"
+					autoCorrect={false}
+					style={[
+						styles.textInput,
+						{
+							color: colors.text,
+						},
+					]}
+				/>
+			</View>
 
 			<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
 				ABOUT ME
