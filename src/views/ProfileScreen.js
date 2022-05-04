@@ -37,6 +37,7 @@ const ProfileScreen = ({ navigation }) => {
   // Initialize Firebase
   const firestore = getFirestore(app);
 
+  const [name, setName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [bio, setBio] = useState("");
@@ -53,6 +54,7 @@ const ProfileScreen = ({ navigation }) => {
         if (doc.exists) {
           console.log("Document Data:", doc.data().FirstName);
           let data = doc.data();
+          setName(data.FirstName + " " + data.LastName);
           setFirstName(data.FirstName);
           setLastName(data.LastName);
           setBio(data.Biography);
@@ -82,19 +84,22 @@ const ProfileScreen = ({ navigation }) => {
   ];
   const { colors } = useTheme();
 
-  const updateName = (newText) => {
-    console.log(newText);
-    const words = newText.split(" ");
-    setFirstName(words[0]);
-    if (words.length > 1)
-      setLastName(words[1]);
-  }
-
   const sumbitProfile = async () => {
+    var words = name.split(" ");
+    var firstName1 = "";
+    var lastName1 = "";
+    if (words.length > 0) {
+      firstName1 = words[0];
+    }
+    if (words.length > 1) {
+      lastName1 = words[1];
+    }
+
+    setFirstName(firstName1);
     console.log(
       "Submit",
-      firstName,
-      lastName,
+      firstName1,
+      lastName1,
       bio,
       phone,
       email,
@@ -102,10 +107,9 @@ const ProfileScreen = ({ navigation }) => {
       city
     );
 
-    // const docSnap = await getDoc(docRef);
     const docData = {
-      "FirstName": firstName,
-      "LastName": lastName,
+      "FirstName": firstName1,
+      "LastName": lastName1,
       "Biography": bio,
       "Phone": phone,
 	  "Email": email,
@@ -164,8 +168,8 @@ const ProfileScreen = ({ navigation }) => {
       <View style={styles.action}>
         <FontAwesome name="user-o" color={colors.text} size={20} />
         <TextInput
-          value={firstName + " " + lastName}
-          onChangeText={updateName}
+          value={name}
+          onChangeText={setName}
           placeholderTextColor="#666666"
           autoCorrect={false}
           style={[

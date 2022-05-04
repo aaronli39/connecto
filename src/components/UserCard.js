@@ -31,9 +31,9 @@ export default UserCard;
 
 const styles = StyleSheet.create({
 	outerContainer: {
-		marginTop: 0,
+		marginTop: 20,
 		elevation: 8,
-		width: "60%",
+		width: "44%",
 		aspectRatio: 1,
 		borderRadius: 12,
 	},
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
 	},
 	cardTextRight: {
 		alignSelf: "center",
-		marginLeft: 0,
+		marginLeft: 8,
 		flex: 1,
 	},
 });
