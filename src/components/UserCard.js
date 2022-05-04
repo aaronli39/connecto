@@ -3,7 +3,7 @@ import { Card } from "react-native-paper";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 
 // this component serves to contain an invidual event card
-const UserCard = ({ user, onClickEvent }) => {
+const UserCard = ({ user, onClickEvent, match }) => {
 	console.log(user);
 	return (
 		<Pressable
