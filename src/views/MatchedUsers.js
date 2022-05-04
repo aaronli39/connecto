@@ -78,7 +78,7 @@ const MatchedUsers = () => {
 						</View>
 					) : (
 						userList?.map((ev, idx) => (
-							<UserCard user={ev} key={idx}></UserCard>
+							<UserCard user={ev} key={idx} renderPhone={true}></UserCard>
 						))
 					)}
 				</View>

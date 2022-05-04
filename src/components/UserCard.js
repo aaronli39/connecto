@@ -3,7 +3,7 @@ import { Card } from "react-native-paper";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 
 // this component serves to contain an invidual event card
-const UserCard = ({ user, onClickEvent, match }) => {
+const UserCard = ({ user, onClickEvent, match, renderPhone }) => {
 	console.log(user);
 	return (
 		<Pressable
@@ -17,10 +17,16 @@ const UserCard = ({ user, onClickEvent, match }) => {
 						source={{ uri: `${user?.profileImage}` }}
 						resizeMode="cover"
 					/>
-					<View style={styles.cardTextBackground}>
-						<Text>{user.name}</Text>
-						<Text>{user.phone}</Text>
-					</View>
+					{renderPhone === true ? (
+						<View style={styles.cardTextBackground}>
+							<Text style={{ width: "100%" }}>{user.name}</Text>
+							<Text style={{ paddingBottom: 4 }}>{user.phone}</Text>
+						</View>
+					) : (
+						<View style={styles.cardTextBackground2}>
+							<Text style={{ width: "100%" }}>{user.name}</Text>
+						</View>
+					)}
 				</Card.Content>
 			</Card>
 		</Pressable>
@@ -57,9 +63,23 @@ const styles = StyleSheet.create({
 		borderBottomStartRadius: 12,
 		zIndex: 2,
 		backgroundColor: "rgba(241, 236, 235, 0.8)",
-		padding: 8,
+		paddingHorizontal: 8,
+		paddingVertical: 4,
 		width: "100%",
 		height: 44,
+		position: "absolute",
+		bottom: 0,
+		overflow: "hidden",
+	},
+	cardTextBackground2: {
+		borderBottomEndRadius: 12,
+		borderBottomStartRadius: 12,
+		zIndex: 2,
+		backgroundColor: "rgba(241, 236, 235, 0.8)",
+		paddingHorizontal: 8,
+		paddingVertical: 4,
+		width: "100%",
+		height: 28,
 		position: "absolute",
 		bottom: 0,
 		overflow: "hidden",
