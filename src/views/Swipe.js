@@ -71,7 +71,7 @@ const Swipe = ({ route }) => {
 		const docRef = doc(firestore, "eventAttendees", "y6a3JTOfhBgmYYVXxyZT");
 		getDoc(docRef)
 			.then((doc) => {
-				if(doc.exists) {
+				if (doc.exists) {
 					setUsersReal(doc.data().userList);
 				} else {
 					console.log("No such document");
@@ -79,7 +79,7 @@ const Swipe = ({ route }) => {
 			})
 			.catch((error) => {
 				console.log(error);
-			})
+			});
 	};
 
 	useEffect(() => {
@@ -90,7 +90,7 @@ const Swipe = ({ route }) => {
 	//Functions that handle operations after liking or disliking someone
 	function handleLike() {
 		console.log("liked user");
-		const user = usersReal[currentIndex].name
+		const user = usersReal[currentIndex].name;
 		const match = {
 			name: user,
 			phone: usersReal[currentIndex].phone,
@@ -120,7 +120,8 @@ const Swipe = ({ route }) => {
 	}
 
 	function getNextUser() {
-		const nextIndex = users.length - 2 === currentIndex ? 0 : currentIndex + 1;
+		const nextIndex =
+			usersReal.length - 1 === currentIndex ? 0 : currentIndex + 1;
 		setCurrentIndex(nextIndex);
 	}
 	//onPress functions
