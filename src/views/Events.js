@@ -56,10 +56,11 @@ const Events = ({ navigation }) => {
 	// also pass navigation prop
 	const renderScene = SceneMap({
 		first: () => <CurrentEvents nav={navigation} />,
-		second: PastEvents,
+		second: () => <PastEvents nav={navigation} />,
 	});
 
 	useEffect(() => {
+		let isMounted = true;
 		// fetch user profile data for events page
 		const docRef = doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz");
 		getDoc(docRef)
@@ -87,7 +88,10 @@ const Events = ({ navigation }) => {
 		);
 
 		// unsubscribe from listener to prevent memory leak
-		return () => unsub;
+		return () => {
+			isMounted = false;
+			unsub;
+		};
 	}, []);
 
 	return (

@@ -1,18 +1,133 @@
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import Constants from "expo-constants";
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import EventCard from "../components/EventCard";
+import { CONSTANTS } from "../constants/DataConstants";
+import axios from "axios";
+import {
+	getFirestore,
+	setDoc,
+	doc,
+	getDoc,
+	updateDoc,
+	arrayUnion,
+	onSnapshot,
+} from "firebase/firestore";
+import { app } from "./FirebaseInitialize";
 
-// this component contains the view for the past events
-const PastEvents = () => {
-	// TODO: add state + useEffect hooks here in order
-	// to fetch some dummy events that have "passed" from
-	// firestore and display it here. Follow the code i used in
-	// CurrentEvents.js to display the events and render it
+// Initialize Firebase
+const firestore = getFirestore(app);
+
+// this component contains the view for the current events tab
+const PastEvents = ({ nav }) => {
+	const [eventsList, setEventsList] = useState([]);
+
+	// on page load, fetch all user's events
+	useEffect(async () => {
+		let isMounted = true;
+		fetchMyEventList();
+
+		const unsub = onSnapshot(
+			doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz"),
+			(doc) => {
+				let allEvents = doc.data().myEvents;
+				let currentEvents = [];
+				allEvents.forEach((event) => {
+					let today = new Date().getTime();
+					let eventTime = new Date(event?.start_date + " 2022").getTime();
+					if (eventTime < today) currentEvents.push(event);
+				});
+				setEventsList(currentEvents);
+			},
+			(error) => console.log(error)
+		);
+
+		return () => {
+			unsub;
+			isMounted = false;
+		};
+	}, []);
+
+	// fetch user John Doe's events
+	const fetchMyEventList = () => {
+		const docRef = doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz");
+		getDoc(docRef)
+			.then((doc) => {
+				if (doc.exists) {
+					let allEvents = doc.data().myEvents;
+					let currentEvents = [];
+					allEvents.forEach((event) => {
+						let today = new Date().getTime();
+						let eventTime = new Date(event?.start_date + " 2022").getTime();
+						if (eventTime < today) currentEvents.push(event);
+					});
+					setEventsList(currentEvents);
+				} else {
+					console.log("No such document");
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
+
+	// navigate to specific event details page
+	const viewEventDetailsPage = (event) => {
+		nav.navigate("Event Details", { ...event, buttonStyle: "cancel" });
+	};
 
 	return (
-		<View style={{ marginTop: 100 }}>
-			<Text style={{ textAlign: "center" }}>Past events page!</Text>
+		// outer view to encompass entire page
+		<View style={{ backgroundColor: "white", height: "100%" }}>
+			<ScrollView
+				style={styles.container}
+				keyboardShouldPersistTaps="handled"
+				alignContent="center"
+			>
+				{/* display the event cards */}
+				<View style={styles.eventListContainer}>
+					{/* if null, show message, otherwise render cards*/}
+					{eventsList?.length === 0 ? (
+						<View style={{ marginTop: 100 }}>
+							<Text style={{ textAlign: "center" }}>
+								You have no past events!
+							</Text>
+						</View>
+					) : (
+						eventsList?.map((ev, idx) => (
+							<EventCard
+								event={ev}
+								key={idx}
+								onClickEvent={() => viewEventDetailsPage(ev)}
+							/>
+						))
+					)}
+				</View>
+			</ScrollView>
 		</View>
 	);
 };
 
 export default PastEvents;
+
+const styles = StyleSheet.create({
+	container: {
+		backgroundColor: "white",
+		padding: "4%",
+	},
+	welcomeMessageText: {
+		fontWeight: "bold",
+		fontSize: 24,
+		textAlign: "center",
+		width: "100%",
+		marginTop: Constants.statusBarHeight,
+		marginBottom: Constants.statusBarHeight,
+	},
+	eventListContainer: {
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "space-around",
+		flexWrap: "wrap",
+		paddingBottom: 48,
+	},
+});

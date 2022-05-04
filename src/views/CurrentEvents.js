@@ -24,17 +24,28 @@ const CurrentEvents = ({ nav }) => {
 
 	// on page load, fetch all user's events
 	useEffect(async () => {
+		let isMounted = true;
 		fetchMyEventList();
 
 		const unsub = onSnapshot(
 			doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz"),
 			(doc) => {
-				setEventsList(doc.data().myEvents);
+				let allEvents = doc.data().myEvents;
+				let currentEvents = [];
+				allEvents.forEach((event) => {
+					let today = new Date().getTime();
+					let eventTime = new Date(event?.start_date + " 2022").getTime();
+					if (eventTime >= today) currentEvents.push(event);
+				});
+				setEventsList(currentEvents);
 			},
 			(error) => console.log(error)
 		);
 
-		return () => unsub;
+		return () => {
+			unsub;
+			isMounted = false;
+		};
 	}, []);
 
 	// fetch user John Doe's events
