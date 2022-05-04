@@ -44,7 +44,7 @@ const ProfileScreen = ({ navigation }) => {
 	const [bio, setBio] = useState("");
 	const [phone, setPhone] = useState("");
 	const [email, setEmail] = useState("");
-	const [country, setCountry] = useState("");
+	const [age, setAge] = useState("");
 	const [city, setCity] = useState("");
 	//Collection Ref
 	const docRef = doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz");
@@ -53,16 +53,14 @@ const ProfileScreen = ({ navigation }) => {
 		getDoc(docRef)
 			.then((doc) => {
 				if (doc.exists) {
-					console.log("Document Data:", doc.data().FirstName);
 					let data = doc.data();
 					setName(data.FirstName + " " + data.LastName);
-					console.log("PROFILESCREEN:", data.FirstName + " " + data.LastName);
 					setFirstName(data.FirstName);
 					setLastName(data.LastName);
 					setBio(data.Biography);
 					setPhone(data.Phone);
 					setEmail(data.Email);
-					setCountry(data.Country);
+					setAge(data.Age);
 					setCity(data.City);
 				} else {
 					console.log("No such document");
@@ -86,7 +84,7 @@ const ProfileScreen = ({ navigation }) => {
 	];
 	const { colors } = useTheme();
 
-	const sumbitProfile = async () => {
+	const submitProfile = async () => {
 		var words = name.split(" ");
 		var firstName1 = "";
 		var lastName1 = "";
@@ -98,16 +96,6 @@ const ProfileScreen = ({ navigation }) => {
 		}
 
 		setFirstName(firstName1);
-		console.log(
-			"Submit",
-			firstName1,
-			lastName1,
-			bio,
-			phone,
-			email,
-			country,
-			city
-		);
 
 		const docData = {
 			FirstName: firstName1,
@@ -115,10 +103,9 @@ const ProfileScreen = ({ navigation }) => {
 			Biography: bio,
 			Phone: phone,
 			Email: email,
-			Country: country,
 			City: city,
+			Age: age,
 		};
-		console.log(docData);
 		await updateDoc(docRef, docData);
 	};
 
@@ -171,126 +158,130 @@ const ProfileScreen = ({ navigation }) => {
 				)}
 			/>
 
-			<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>NAME</Text>
-			<View style={styles.action}>
-				<FontAwesome name="user-o" color={colors.text} size={20} />
-				<TextInput
-					value={firstName + " " + lastName}
-					onChangeText={name}
-					placeholderTextColor="#666666"
-					autoCorrect={false}
-					style={[
-						styles.textInput,
-						{
-							color: colors.text,
-						},
-					]}
-				/>
-			</View>
+			<View style={{ width: "100%", padding: "4%" }}>
+				<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
+					NAME
+				</Text>
+				<View style={styles.action}>
+					<FontAwesome name="user-o" color={colors.text} size={20} />
+					<TextInput
+						value={name}
+						onChangeText={setName}
+						placeholderTextColor="#666666"
+						autoCorrect={false}
+						style={[
+							styles.textInput,
+							{
+								color: colors.text,
+							},
+						]}
+					/>
+				</View>
 
-			<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
-				ABOUT ME
-			</Text>
-			<View style={styles.action}>
-				<Feather name="info" color={colors.text} size={20} />
-				<TextInput
-					value={bio}
-					onChangeText={setBio}
-					placeholderTextColor="#666666"
-					autoCorrect={false}
-					style={[
-						styles.textInput,
-						{
-							color: colors.text,
-						},
-					]}
-				/>
-			</View>
+				<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>AGE</Text>
+				<View style={styles.action}>
+					<Icon name="clock-outline" color={colors.text} size={20} />
+					<TextInput
+						value={age}
+						onChangeText={setAge}
+						placeholderTextColor="#666666"
+						autoCorrect={false}
+						style={[
+							styles.textInput,
+							{
+								color: colors.text,
+							},
+						]}
+					/>
+				</View>
 
-			<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
-				PHONE NUMBER
-			</Text>
-			<View style={styles.action}>
-				<Feather name="phone" color={colors.text} size={20} />
-				<TextInput
-					value={phone}
-					onChangeText={setPhone}
-					placeholderTextColor="#666666"
-					keyboardType="number-pad"
-					autoCorrect={false}
-					style={[
-						styles.textInput,
-						{
-							color: colors.text,
-						},
-					]}
-				/>
-			</View>
+				<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
+					ABOUT ME
+				</Text>
+				<View style={styles.action}>
+					<Feather name="info" color={colors.text} size={20} />
+					<TextInput
+						value={bio}
+						onChangeText={setBio}
+						placeholderTextColor="#666666"
+						autoCorrect={false}
+						style={[
+							styles.textInput,
+							{
+								color: colors.text,
+							},
+						]}
+					/>
+				</View>
 
-			<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
-				SCHOOL
-			</Text>
-			<View style={styles.action}>
-				<Icon name="school" color={colors.text} size={20} />
-				<TextInput
-					value={email}
-					onChangeText={setEmail}
-					placeholderTextColor="#666666"
-					keyboardType="email-address"
-					autoCorrect={false}
-					style={[
-						styles.textInput,
-						{
-							color: colors.text,
-						},
-					]}
-				/>
-			</View>
+				<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
+					PHONE NUMBER
+				</Text>
+				<View style={styles.action}>
+					<Feather name="phone" color={colors.text} size={20} />
+					<TextInput
+						value={phone}
+						onChangeText={setPhone}
+						placeholderTextColor="#666666"
+						keyboardType="number-pad"
+						autoCorrect={false}
+						style={[
+							styles.textInput,
+							{
+								color: colors.text,
+							},
+						]}
+					/>
+				</View>
 
-			<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
-				JOB TITLE
-			</Text>
-			<View style={styles.action}>
-				<Icon name="shoe-formal" color={colors.text} size={20} />
-				<TextInput
-					value={country}
-					onChangeText={setCountry}
-					placeholderTextColor="#666666"
-					autoCorrect={false}
-					style={[
-						styles.textInput,
-						{
-							color: colors.text,
-						},
-					]}
-				/>
-			</View>
+				<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
+					EMAIL
+				</Text>
+				<View style={styles.action}>
+					<Icon name="email-outline" color={colors.text} size={20} />
+					<TextInput
+						value={email}
+						onChangeText={setEmail}
+						placeholderTextColor="#666666"
+						keyboardType="email-address"
+						autoCorrect={false}
+						style={[
+							styles.textInput,
+							{
+								color: colors.text,
+							},
+						]}
+					/>
+				</View>
 
-			<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>City</Text>
-			<View style={styles.action}>
-				<Icon name="map-marker-outline" color={colors.text} size={20} />
-				<TextInput
-					value={city}
-					onChangeText={setCity}
-					placeholderTextColor="#666666"
-					autoCorrect={false}
-					style={[
-						styles.textInput,
-						{
-							color: colors.text,
-						},
-					]}
-				/>
-			</View>
+				<Text style={{ alignSelf: "flex-start", fontWeight: "bold" }}>
+					City
+				</Text>
+				<View style={styles.action}>
+					<Icon name="map-marker-outline" color={colors.text} size={20} />
+					<TextInput
+						value={city}
+						onChangeText={setCity}
+						placeholderTextColor="#666666"
+						autoCorrect={false}
+						style={[
+							styles.textInput,
+							{
+								color: colors.text,
+							},
+						]}
+					/>
+				</View>
 
-			<Button
-				mode="outlined"
-				color="black"
-				style={styles.updateButton}
-				onPress={sumbitProfile}
-			>
-				Update Profile!
-			</Button>
+				<Button
+					mode="outlined"
+					color="black"
+					style={styles.updateButton}
+					onPress={submitProfile}
+				>
+					Update Profile!
+				</Button>
+			</View>
 		</ScrollView>
 	);
 };

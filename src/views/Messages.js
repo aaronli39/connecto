@@ -60,6 +60,7 @@ const Messages = ({ navigation }) => {
 	});
 
 	useEffect(() => {
+		let isMounted = true;
 		// fetch user profile data for events page
 		const docRef = doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz");
 		getDoc(docRef)
@@ -87,7 +88,10 @@ const Messages = ({ navigation }) => {
 		);
 
 		// unsubscribe from listener to prevent memory leak
-		return () => unsub;
+		return () => {
+			unsub;
+			isMounted = false;
+		};
 	}, []);
 
 	return (

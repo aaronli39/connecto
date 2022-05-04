@@ -32,7 +32,16 @@ const EventSelect = ({ nav }) => {
 		const unsub = onSnapshot(
 			doc(firestore, "users", "DdRPo2lJfFbBcqkzAhXz"),
 			(doc) => {
-				setEventsList(doc.data().myEvents);
+				let allEvents = doc.data().myEvents;
+				let currentEvents = [];
+				allEvents.forEach((event) => {
+					let today = new Date().getTime();
+					let eventTime = new Date(event?.start_date + " 2022").getTime();
+					console.log(today >= eventTime);
+					if (eventTime >= today) currentEvents.push(event);
+				});
+				console.log(currentEvents);
+				setEventsList(currentEvents);
 			},
 			(error) => console.log(error)
 		);
@@ -51,10 +60,11 @@ const EventSelect = ({ nav }) => {
 					allEvents.forEach((event) => {
 						let today = new Date().getTime();
 						let eventTime = new Date(event?.start_date + " 2022").getTime();
+						console.log(today >= eventTime);
 						if (eventTime >= today) currentEvents.push(event);
 					});
+					console.log(currentEvents);
 					setEventsList(currentEvents);
-
 				} else {
 					console.log("No such document");
 				}
@@ -67,8 +77,8 @@ const EventSelect = ({ nav }) => {
 	// navigate to specific event details page
 	const navToSwipe = (event) => {
 		console.log("Selected Event");
-        console.log(event);
-        nav.navigate("Swipes", {...event});
+		console.log(event);
+		nav.navigate("Swipes", { ...event });
 	};
 
 	return (

@@ -19,7 +19,7 @@ const UserCard = ({ user, onClickEvent }) => {
 					/>
 					<View style={styles.cardTextBackground}>
 						<Text>{user.name}</Text>
-						{/* <Text>{user.Phone}</Text> */}
+						<Text>{user.phone}</Text>
 					</View>
 				</Card.Content>
 			</Card>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "rgba(241, 236, 235, 0.8)",
 		padding: 8,
 		width: "100%",
-		height: 32,
+		height: 44,
 		position: "absolute",
 		bottom: 0,
 		overflow: "hidden",

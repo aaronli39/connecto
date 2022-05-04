@@ -16,6 +16,7 @@ import SwipeHandle from "../components/SwipeHandle";
 import Constants from "expo-constants";
 import { app } from "../views/FirebaseInitialize";
 import connectOmatch from "../assets/connectOmatch.png";
+import { LinearGradient } from "expo-linear-gradient";
 import {
 	arrayUnion,
 	doc,
@@ -24,6 +25,7 @@ import {
 	setDoc,
 	updateDoc,
 } from "firebase/firestore";
+import { Card, Title} from "react-native-paper";
 
 const firestore = getFirestore(app);
 
@@ -140,8 +142,12 @@ const Swipe = ({ route }) => {
 	}
 
 	return (
-		<View style={styles.container}>
-			<Text style={styles.welcomeMessageText}>{event.title}</Text>
+		<LinearGradient style={styles.container} colors={["#064163", "#3ac2d6"]}>
+			<Card style={styles.title}>
+				<Card.Content>
+					<Title style={styles.welcomeMessageText}>Event Title: {event.title} </Title>
+				</Card.Content>
+			</Card>
 			<Modal
 				animationType="fade"
 				transparent={true}
@@ -152,7 +158,7 @@ const Swipe = ({ route }) => {
 				}}
 			>
 				<View style={styles.centeredView}>
-					<View style={styles.modalView}>
+					<LinearGradient style={styles.modalView} colors={["#e2f0f7", "#fcc3a0"]}>
 						<Text style={styles.modalText}>You have a Match!</Text>
 						<Image style={styles.matchPopup} source={{ uri: match_image }} />
 						<Text style={styles.modalText}>
@@ -164,7 +170,7 @@ const Swipe = ({ route }) => {
 						>
 							<Text style={styles.textStyle}>Got It!</Text>
 						</Pressable>
-					</View>
+					</LinearGradient>
 				</View>
 			</Modal>
 
@@ -188,7 +194,7 @@ const Swipe = ({ route }) => {
 				handleDislikePress={handleDislikePress}
 				handleLikePress={handleLikePress}
 			/>
-		</View>
+		</LinearGradient>
 	);
 };
 
@@ -197,6 +203,14 @@ export default Swipe;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+	},
+	title: {
+		margin:10,
+		borderRadius: 10,
+		backgroundColor:"rgba(0,0,0,0)",
+		borderColor:"#f7cc98",
+		borderWidth:0,
+		
 	},
 	matchPopup: {
 		width: 300,
@@ -220,8 +234,9 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		textAlign: "center",
 		width: "100%",
-		marginTop: 10,
-		marginBottom: 10,
+		marginTop: 5,
+		marginBottom: 5,
+		color:"#fcc3a0",
 	},
 	centeredView: {
 		flex: 1,
@@ -232,9 +247,8 @@ const styles = StyleSheet.create({
 	},
 	modalView: {
 		margin: 20,
-		backgroundColor: "white",
 		borderRadius: 20,
-		padding: 35,
+		padding: 20,
 		alignItems: "center",
 		shadowColor: "#000",
 		shadowOffset: {
@@ -254,15 +268,21 @@ const styles = StyleSheet.create({
 		backgroundColor: "#F194FF",
 	},
 	buttonClose: {
-		backgroundColor: "#2196F3",
+		width: "50%",
+		alignSelf: "center",
+		marginTop: 20,
+		borderColor: "#415e7c",
+		borderWidth: 2,
+		borderRadius: 12,
+		marginBottom: 24,
 	},
 	textStyle: {
-		color: "white",
+		color: "#064163",
 		fontWeight: "bold",
 		textAlign: "center",
 	},
 	modalText: {
-		color: "black",
+		color: "#064163",
 		fontWeight: "bold",
 		marginBottom: 15,
 		textAlign: "center",
